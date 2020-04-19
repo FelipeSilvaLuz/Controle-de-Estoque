@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewData["Title"] = "Autenticar";
+    Layout = null;
+}
+<html>
+<head>
+    <link href="~/css/site.css" rel="stylesheet" />
+
+</head>
+<body>
+    <h2>Sistema para Controle de Estoque</h2>
+    <br />
+    <div class="centralizar">
+        <div class="centralizar_itens">
+            <h3>Usuário: </h3>
+            <input type="text" class="LoginUsuario" />
+
+            <h3>Senha: </h3>
+            <input type="text" class="SenhaUsuario" />
+            <br />
+        </div>
+        <button class="btn-success btnAcessarSistema" style="float:right; margin-top:35%">Acessar Sistema</button>
+    </div>
+    <input id="urlValidarAcesso" type="hidden" value="@Url.Action("ValidarAcesso", "Login")" />
+</body>
+</html>
+
+<script src="~/js/Login/login.js"></script>

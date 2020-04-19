@@ -35,3 +35,17 @@ body {
         display: none;
     }
 }
+
+.centralizar{
+    border: solid;
+    margin: 0 auto;
+    position: relative;
+    width: 30%;
+    height: 75%;
+}
+
+.centralizar_itens {
+    margin: 0 auto;
+    width: 30%;
+    margin-top:30%;
+}
