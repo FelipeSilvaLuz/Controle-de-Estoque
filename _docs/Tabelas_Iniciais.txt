@@ -1,0 +1,15 @@
+create database ControleEstoque;
+use ControleEstoque;
+
+CREATE TABLE AutenticacaoUsuarios (
+		UsuarioId		INT AUTO_INCREMENT PRIMARY KEY
+        ,	Nome			VARCHAR(80)
+        ,	CPF				VARCHAR(15)
+        ,	Ramal			VARCHAR(10)
+        ,	Email			VARCHAR(80)
+        ,	Senha			VARCHAR(40)
+        ,	CriadoEm		DateTime
+        ,	CriadoPor		VARCHAR(80)
+        ,	AlteradoEm		DateTime
+        ,	AlteradoPor		VARCHAR(80)
+        );

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estoque.MvcCore", "Controle_Estoque\Estoque.MvcCore.csproj", "{06DE3FB0-83AA-4C3E-933F-E049D90E6FCF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estoque.MvcCore", "Controle_Estoque\Estoque.MvcCore.csproj", "{06DE3FB0-83AA-4C3E-933F-E049D90E6FCF}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Client", "0 - Client", "{B44AB77C-4470-44FA-A3CC-D7C4B6C5D20C}"
 EndProject
@@ -23,19 +23,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.1.1 - IoC", "1.1.1 - IoC"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.1.2 - Util", "1.1.2 - Util", "{8F5C55BB-33AF-477B-B0F0-023A4E67D93A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estoque.Application", "Estoque.Application\Estoque.Application.csproj", "{B979D715-8F66-4F29-AAAC-2BBF8F516804}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estoque.Application", "Estoque.Application\Estoque.Application.csproj", "{B979D715-8F66-4F29-AAAC-2BBF8F516804}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estoque.Domain", "Estoque.Domain\Estoque.Domain.csproj", "{C9C3954F-C579-4E56-B82F-5851440B9228}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estoque.Domain", "Estoque.Domain\Estoque.Domain.csproj", "{C9C3954F-C579-4E56-B82F-5851440B9228}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estoque.IoC", "Estoque.IoC\Estoque.IoC.csproj", "{A8052085-CDC6-4173-A8B1-81F32DE7CB20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estoque.IoC", "Estoque.IoC\Estoque.IoC.csproj", "{A8052085-CDC6-4173-A8B1-81F32DE7CB20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estoque.Util", "Estoque.Util\Estoque.Util.csproj", "{BECF197B-9A12-4618-8B0A-34E1849E646C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estoque.Util", "Estoque.Util\Estoque.Util.csproj", "{BECF197B-9A12-4618-8B0A-34E1849E646C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estoque.EFData", "Estoque.EFData\Estoque.EFData.csproj", "{5CF707F5-2C65-437C-91EF-B2A62C0C6C42}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estoque.EFData", "Estoque.EFData\Estoque.EFData.csproj", "{5CF707F5-2C65-437C-91EF-B2A62C0C6C42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estoque.WebClientData", "Estoque.WebClientData\Estoque.WebClientData.csproj", "{53F5F5B6-C1B2-4825-8DAD-D2D661161054}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estoque.WebClientData", "Estoque.WebClientData\Estoque.WebClientData.csproj", "{53F5F5B6-C1B2-4825-8DAD-D2D661161054}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estoque.Security", "Estoque.Security\Estoque.Security.csproj", "{42AAC2A3-A87D-4DFF-8786-B6C006AAA85A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Estoque.Security", "Estoque.Security\Estoque.Security.csproj", "{42AAC2A3-A87D-4DFF-8786-B6C006AAA85A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

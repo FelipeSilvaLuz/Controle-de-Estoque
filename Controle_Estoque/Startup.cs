@@ -2,6 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Estoque.Application.Interfaces;
+using Estoque.Application.Services;
+using Estoque.Domain.Entities;
+using Estoque.Domain.Interfaces.Repositories;
+using Estoque.EFData.Contexts;
+using Estoque.EFData.Repositories;
+using Estoque.Util.Configuracoes;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +38,11 @@ namespace Controle_Estoque
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddScoped<EstoqueContext>();
+            services.AddScoped<IConfiguracaoEstoque, ConfiguracaoEstoque>();
+            services.AddScoped<IAutenticarUsuarioRepository, AutenticarUsuarioRepository>();
+            services.AddScoped<IAutenticacaoUsuarioAppService, AutenticacaoUsuarioAppService>();
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
