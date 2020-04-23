@@ -8,6 +8,8 @@
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+    <PackageReference Include="Serilog" Version="2.9.0" />
+    <PackageReference Include="Serilog.Sinks.File" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,6 +17,10 @@
     <ProjectReference Include="..\Estoque.Domain\Estoque.Domain.csproj" />
     <ProjectReference Include="..\Estoque.EFData\Estoque.EFData.csproj" />
     <ProjectReference Include="..\Estoque.IoC\Estoque.IoC.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\logs\" />
   </ItemGroup>
 
 </Project>

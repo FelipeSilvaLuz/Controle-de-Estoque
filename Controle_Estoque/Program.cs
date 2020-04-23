@@ -7,6 +7,8 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 
 namespace Controle_Estoque
 {
@@ -14,7 +16,33 @@ namespace Controle_Estoque
     {
         public static void Main(string[] args)
         {
-            CreateWebHostBuilder(args).Build().Run();
+            IConfiguration configuration = new ConfigurationBuilder()
+                                              .SetBasePath(Directory.GetCurrentDirectory())
+                                              .AddJsonFile("appSettings.json")
+                                              .Build();
+
+            string caminhologs = configuration.GetSection("EstoqueLog")["Caminho"];
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+                .Enrich.FromLogContext()
+                .WriteTo.File(caminhologs, rollingInterval: RollingInterval.Day, retainedFileCountLimit: 32)
+                .CreateLogger();
+
+            try
+            {
+                Log.Information("Iniciando o sistema de estoque");
+                CreateWebHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                Log.Fatal(ex, "Erro fatal no sistema de estoque");
+            }
+            finally
+            {
+                Log.CloseAndFlush();
+            }
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

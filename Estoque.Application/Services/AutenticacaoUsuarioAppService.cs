@@ -1,10 +1,7 @@
 ﻿using Estoque.Application.Interfaces;
 using Estoque.Domain.Interfaces.Repositories;
 using Estoque.Util;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Estoque.Application.Services
 {
@@ -15,11 +12,24 @@ namespace Estoque.Application.Services
         {
             _autenticarUsuarioRepository = autenticarUsuarioRepository;
         }
-        public string ValidarUsuario(AutenticarUsuarioViewModel model)
+        public string ValidarUsuario(AutenticarUsuarioViewModel model, ref string mensagem)
         {
 
             var buscaBanco = _autenticarUsuarioRepository.Get(x => x.Email.ToLower() == model.Usuario.ToLower()).FirstOrDefault();
 
+            if (buscaBanco == null)
+            {
+                mensagem = "E-mail não existe no sistema!";
+                return null;
+            }
+
+            else if(buscaBanco.Senha != model.Senha)
+            {
+                mensagem = "Senha informada esta invalida!";
+                return null;
+            }
+
+            // caso tenha acesso ele chega aqui
             return string.Empty;
         }
     }

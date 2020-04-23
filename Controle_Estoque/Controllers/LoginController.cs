@@ -1,19 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Estoque.Application.Interfaces;
+﻿using Estoque.Application.Interfaces;
 using Estoque.Util;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
 
 namespace Estoque.MvcCore.Controllers
 {
     public class LoginController : Controller
     {
         private readonly IAutenticacaoUsuarioAppService _autenticacaoUsuarioAppService;
-        public LoginController(IAutenticacaoUsuarioAppService autenticacaoUsuarioAppService)
+        private readonly ILogger<LoginController> _logger;
+        public LoginController(
+            IAutenticacaoUsuarioAppService autenticacaoUsuarioAppService,
+            ILogger<LoginController> logger)
         {
             _autenticacaoUsuarioAppService = autenticacaoUsuarioAppService;
+            _logger = logger;
         }
         public IActionResult Autenticar()
         {
@@ -23,11 +26,51 @@ namespace Estoque.MvcCore.Controllers
         [HttpPost]
         public IActionResult ValidarAcesso([FromBody] AutenticarUsuarioViewModel dados)
         {
+            try
+            {
+                bool sucesso = true;
+                string mensagens = string.Empty;
+                List<string> mensagem = new List<string>();
 
-           var teste =  _autenticacaoUsuarioAppService.ValidarUsuario(dados);
+                if (dados.Usuario.Trim() == string.Empty || dados.Senha.Trim() == string.Empty)
+                {
+                    sucesso = false;
+                    mensagem.Add("Preencha todos os campos!");
 
+                    return Json(new
+                    {
+                        sucesso = sucesso,
+                        tipo = sucesso ? "sucesso" : "alerta",
+                        mensagem = mensagem
+                    });
+                }
 
-            return null;
+                var validar = _autenticacaoUsuarioAppService.ValidarUsuario(dados, ref mensagens);
+
+                if (validar == null)
+                {
+                    sucesso = false;
+                    return Json(new
+                    {
+                        sucesso = sucesso,
+                        tipo = sucesso ? "sucesso" : "alerta",
+                        mensagem = mensagens
+                    });
+                }
+
+                return null;
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao tentar validar acesso de usuario no sistema");
+                return Json(new
+                {
+                    sucesso = false,
+                    tipo = "erro",
+                    mensagens = new List<string> { "Erro ao executar ação, tente novamente ou entre em contato com o administrador." }
+                });
+            }
         }
     }
 }

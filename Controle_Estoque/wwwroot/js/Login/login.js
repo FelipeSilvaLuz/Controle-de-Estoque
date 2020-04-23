@@ -6,12 +6,19 @@ function apiValidarAcesso(dados) {
         url: urlValidarAcesso,
         data: JSON.stringify(dados),
         contentType: "application/json; charset=utf-8",
-        processData: true,
+        processData: false,
         traditional: true
     });
 }
 
 function ValidarAcesso_OnClick() {
+
+    $('.dangerValidacaoLogin').removeClass('visible');
+    $('.alertaValidacaoLogin').removeClass('visible');
+    $('.dangerValidacaoLogin').addClass('invisible');
+    $('.alertaValidacaoLogin').addClass('invisible');
+    $('.dangerValidacaoLogin').text('');
+    $('.alertaValidacaoLogin').text('');
 
     let dados = {
         usuario: $('.LoginUsuario').val(),
@@ -23,7 +30,16 @@ function ValidarAcesso_OnClick() {
 
         }
         else {
-
+            if (retorno.tipo === 'erro') {
+                $('.dangerValidacaoLogin').removeClass('invisible');
+                $('.dangerValidacaoLogin').addClass('visible');
+                $('.dangerValidacaoLogin').text(retorno.mensagem);
+            }
+            else {
+                $('.alertaValidacaoLogin').removeClass('invisible');
+                $('.alertaValidacaoLogin').addClass('visible');
+                $('.alertaValidacaoLogin').text(retorno.mensagem);
+            }
         }
     });
 }

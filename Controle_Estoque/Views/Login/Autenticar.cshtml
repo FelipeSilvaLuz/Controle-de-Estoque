@@ -5,24 +5,33 @@
 }
 <html>
 <head>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+
     <link href="~/css/site.css" rel="stylesheet" />
     <script src="~/js/jquery-1.12.2.min.js"></script>
     <script src="~/js/jquery-ui.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <h2>Sistema para Controle de Estoque</h2>
-    <br />
-    <div class="centralizar">
-        <div class="centralizar_itens">
-            <h3>Usuário: </h3>
-            <input type="text" class="LoginUsuario" />
 
-            <h3>Senha: </h3>
-            <input type="text" class="SenhaUsuario" />
-            <br />
+    <div class="login">
+        <div class="alert alert-warning alertaValidacaoLogin invisible" role="alert">
         </div>
-        <button class="btn-success btnAcessarSistema" style="float:right; margin-top:35%">Acessar Sistema</button>
+
+        <div class="alert alert-danger dangerValidacaoLogin invisible" role="alert">
+        </div>
+
+        <h1>Login</h1>
+        <p>E-mail</p>
+        <input type="text" class="LoginUsuario" placeholder="Insira seu E-mail">
+        <p>Senha</p>
+        <input type="password" class="SenhaUsuario" placeholder="Insira sua senha">
+
+        <button class="btn btn-success btnAcessarSistema" style="float:right; margin-top:30%">Acessar Sistema</button>
+
+        <a href="#"> Esqueceu sua senha?</a><br>
     </div>
+
     <input id="urlValidarAcesso" type="hidden" value="@Url.Action("ValidarAcesso", "Login")" />
 </body>
 </html>
