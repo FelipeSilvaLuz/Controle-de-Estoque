@@ -32,19 +32,6 @@ namespace Estoque.MvcCore.Controllers
                 string mensagens = string.Empty;
                 List<string> mensagem = new List<string>();
 
-                if (dados.Usuario.Trim() == string.Empty || dados.Senha.Trim() == string.Empty)
-                {
-                    sucesso = false;
-                    mensagem.Add("Preencha todos os campos!");
-
-                    return Json(new
-                    {
-                        sucesso = sucesso,
-                        tipo = sucesso ? "sucesso" : "alerta",
-                        mensagem = mensagem
-                    });
-                }
-
                 var validar = _autenticacaoUsuarioAppService.ValidarUsuario(dados, ref mensagens);
 
                 if (validar == null)
@@ -57,9 +44,15 @@ namespace Estoque.MvcCore.Controllers
                         mensagem = mensagens
                     });
                 }
-
-                return null;
-
+                else
+                {
+                    return Json(new
+                    {
+                        sucesso = sucesso,
+                        tipo = sucesso ? "sucesso" : "alerta",
+                        mensagem = mensagens
+                    });
+                }
             }
             catch (Exception ex)
             {

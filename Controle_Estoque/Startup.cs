@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Estoque.Application.AutoMapper;
 using Estoque.Application.Interfaces;
 using Estoque.Application.Services;
 using Estoque.Domain.Entities;
@@ -43,6 +44,8 @@ namespace Controle_Estoque
             services.AddScoped<IAutenticarUsuarioRepository, AutenticarUsuarioRepository>();
             services.AddScoped<IAutenticacaoUsuarioAppService, AutenticacaoUsuarioAppService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+            services.AddAutoMapperSetup();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

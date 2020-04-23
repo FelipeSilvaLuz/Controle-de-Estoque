@@ -21,13 +21,13 @@ function ValidarAcesso_OnClick() {
     $('.alertaValidacaoLogin').text('');
 
     let dados = {
-        usuario: $('.LoginUsuario').val(),
+        email: $('.LoginUsuario').val(),
         senha: $('.SenhaUsuario').val()
     };
 
     apiValidarAcesso(dados).done(function (retorno) {
         if (retorno.sucesso) {
-
+            window.open("ListaItens");
         }
         else {
             if (retorno.tipo === 'erro') {

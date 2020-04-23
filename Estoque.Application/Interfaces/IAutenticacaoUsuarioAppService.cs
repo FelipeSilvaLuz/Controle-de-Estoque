@@ -7,6 +7,6 @@ namespace Estoque.Application.Interfaces
 {
     public interface IAutenticacaoUsuarioAppService
     {
-        string ValidarUsuario(AutenticarUsuarioViewModel model, ref string mensagem);
+        AutenticarUsuarioViewModel ValidarUsuario(AutenticarUsuarioViewModel model, ref string mensagem);
     }
 }

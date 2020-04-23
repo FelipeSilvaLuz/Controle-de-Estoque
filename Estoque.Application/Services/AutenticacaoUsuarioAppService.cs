@@ -1,4 +1,5 @@
-﻿using Estoque.Application.Interfaces;
+﻿using AutoMapper;
+using Estoque.Application.Interfaces;
 using Estoque.Domain.Interfaces.Repositories;
 using Estoque.Util;
 using System.Linq;
@@ -8,14 +9,24 @@ namespace Estoque.Application.Services
     public class AutenticacaoUsuarioAppService : IAutenticacaoUsuarioAppService
     {
         private readonly IAutenticarUsuarioRepository _autenticarUsuarioRepository;
-        public AutenticacaoUsuarioAppService(IAutenticarUsuarioRepository autenticarUsuarioRepository)
+        private readonly IMapper _mapper;
+        public AutenticacaoUsuarioAppService(
+            IAutenticarUsuarioRepository autenticarUsuarioRepository,
+            IMapper mapper)
         {
             _autenticarUsuarioRepository = autenticarUsuarioRepository;
+            _mapper = mapper;
         }
-        public string ValidarUsuario(AutenticarUsuarioViewModel model, ref string mensagem)
+        public AutenticarUsuarioViewModel ValidarUsuario(AutenticarUsuarioViewModel model, ref string mensagem)
         {
 
-            var buscaBanco = _autenticarUsuarioRepository.Get(x => x.Email.ToLower() == model.Usuario.ToLower()).FirstOrDefault();
+            if (model.Email.Trim() == string.Empty || model.Senha.Trim() == string.Empty)
+            {
+                mensagem = "Preencha todos os campos!";
+                return null;
+            }
+
+            var buscaBanco = _autenticarUsuarioRepository.Get(x => x.Email.ToLower() == model.Email.ToLower()).FirstOrDefault();
 
             if (buscaBanco == null)
             {
@@ -29,8 +40,7 @@ namespace Estoque.Application.Services
                 return null;
             }
 
-            // caso tenha acesso ele chega aqui
-            return string.Empty;
+           return _mapper.Map<AutenticarUsuarioViewModel>(buscaBanco);
         }
     }
 }
