@@ -27,7 +27,7 @@ function ValidarAcesso_OnClick() {
 
     apiValidarAcesso(dados).done(function (retorno) {
         if (retorno.sucesso) {
-            window.open("ListaItens");
+            $(window.document.location).attr('href', 'https://localhost:44301/listagem');
         }
         else {
             if (retorno.tipo === 'erro') {

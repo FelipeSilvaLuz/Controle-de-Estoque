@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Estoque.Application.Interfaces;
+using Estoque.Domain.Entities;
 using Estoque.Domain.Interfaces.Repositories;
 using Estoque.Util;
 using System.Linq;
@@ -17,7 +18,7 @@ namespace Estoque.Application.Services
             _autenticarUsuarioRepository = autenticarUsuarioRepository;
             _mapper = mapper;
         }
-        public AutenticarUsuarioViewModel ValidarUsuario(AutenticarUsuarioViewModel model, ref string mensagem)
+        public AutenticacaoUsuarios ValidarUsuario(AutenticarUsuarioViewModel model, ref string mensagem)
         {
 
             if (model.Email.Trim() == string.Empty || model.Senha.Trim() == string.Empty)
@@ -40,7 +41,7 @@ namespace Estoque.Application.Services
                 return null;
             }
 
-           return _mapper.Map<AutenticarUsuarioViewModel>(buscaBanco);
+            return buscaBanco;
         }
     }
 }

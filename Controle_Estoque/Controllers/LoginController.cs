@@ -1,9 +1,14 @@
-﻿using Estoque.Application.Interfaces;
+﻿using AutoMapper;
+using Estoque.Application.Interfaces;
+using Estoque.Domain.Entities;
 using Estoque.Util;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 
 namespace Estoque.MvcCore.Controllers
 {
@@ -11,12 +16,15 @@ namespace Estoque.MvcCore.Controllers
     {
         private readonly IAutenticacaoUsuarioAppService _autenticacaoUsuarioAppService;
         private readonly ILogger<LoginController> _logger;
+        private readonly IMapper _mapper;
         public LoginController(
             IAutenticacaoUsuarioAppService autenticacaoUsuarioAppService,
-            ILogger<LoginController> logger)
+            ILogger<LoginController> logger,
+            IMapper mapper)
         {
             _autenticacaoUsuarioAppService = autenticacaoUsuarioAppService;
             _logger = logger;
+            _mapper = mapper;
         }
         public IActionResult Autenticar()
         {
@@ -46,6 +54,10 @@ namespace Estoque.MvcCore.Controllers
                 }
                 else
                 {
+                    ClaimsPrincipal principal = CriarClaimsPrincipal(validar);
+                    HttpContext.SignInAsync(principal);
+                    TempData["usuario_logado"] = validar.Nome;
+
                     return Json(new
                     {
                         sucesso = sucesso,
@@ -64,6 +76,23 @@ namespace Estoque.MvcCore.Controllers
                     mensagens = new List<string> { "Erro ao executar ação, tente novamente ou entre em contato com o administrador." }
                 });
             }
+        }
+        public ClaimsPrincipal CriarClaimsPrincipal(AutenticacaoUsuarios usuarioSistema)
+        {
+            List<Claim> claims = ListarClaims(usuarioSistema);
+            ClaimsIdentity identities = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+
+            return new ClaimsPrincipal(new[] { identities });
+        }
+
+        private List<Claim> ListarClaims(AutenticacaoUsuarios usuarioSistema)
+        {
+            List<Claim> claims = new List<Claim>();
+
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, usuarioSistema.Nome));
+            claims.Add(new Claim(ClaimTypes.Email, usuarioSistema.Email));
+
+            return claims;
         }
     }
 }

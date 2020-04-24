@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 
 namespace Estoque.MvcCore.Controllers
 {
-    public class ItensController : Controller
+    public class ItensController : BaseController
     {
-        [Route("ListaItens")]
+        [Route("listagem")]
         public IActionResult ListaItens()
         {
+            var teste = CPFUsuario;
+            var eee = EmailUsuario;
+
             return View();
         }
     }
