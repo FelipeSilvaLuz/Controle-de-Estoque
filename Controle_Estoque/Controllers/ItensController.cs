@@ -8,8 +8,8 @@ namespace Estoque.MvcCore.Controllers
         [Route("listagem")]
         public IActionResult ListaItens()
         {
-            var teste = CPFUsuario;
-            var eee = EmailUsuario;
+
+            ViewBag.verBotoes = true;
 
             return View();
         }

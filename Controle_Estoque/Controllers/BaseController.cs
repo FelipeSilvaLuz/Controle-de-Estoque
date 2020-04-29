@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Estoque.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Newtonsoft.Json;
 
 namespace Estoque.MvcCore.Controllers
 {
@@ -18,9 +19,8 @@ namespace Estoque.MvcCore.Controllers
                 var userData = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData);
                 if (string.IsNullOrEmpty(userData?.Value ?? string.Empty))
                     return string.Empty;
-                AutenticacaoUsuarios autenticacao = new AutenticacaoUsuarios();
 
-                var usuario = autenticacao;
+                var usuario = JsonConvert.DeserializeObject<AutenticacaoUsuarios>(userData.Value);
                 if (usuario == null)
                     return string.Empty;
 
@@ -35,9 +35,8 @@ namespace Estoque.MvcCore.Controllers
                 var userData = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData);
                 if (string.IsNullOrEmpty(userData?.Value ?? string.Empty))
                     return string.Empty;
-                AutenticacaoUsuarios autenticacao = new AutenticacaoUsuarios();
 
-                var usuario = autenticacao;
+                var usuario = JsonConvert.DeserializeObject<AutenticacaoUsuarios>(userData.Value);
                 if (usuario == null)
                     return string.Empty;
 
@@ -52,9 +51,8 @@ namespace Estoque.MvcCore.Controllers
                 var userData = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData);
                 if (string.IsNullOrEmpty(userData?.Value ?? string.Empty))
                     return string.Empty;
-                AutenticacaoUsuarios autenticacao = new AutenticacaoUsuarios();
 
-                var usuario = autenticacao;
+                var usuario = JsonConvert.DeserializeObject<AutenticacaoUsuarios>(userData.Value);
                 if (usuario == null)
                     return string.Empty;
 
@@ -69,9 +67,8 @@ namespace Estoque.MvcCore.Controllers
                 var userData = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData);
                 if (string.IsNullOrEmpty(userData?.Value ?? string.Empty))
                     return string.Empty;
-                AutenticacaoUsuarios autenticacao = new AutenticacaoUsuarios();
 
-                var usuario = autenticacao;
+                var usuario = JsonConvert.DeserializeObject<AutenticacaoUsuarios>(userData.Value);
                 if (usuario == null)
                     return string.Empty;
 
@@ -103,6 +100,8 @@ namespace Estoque.MvcCore.Controllers
                 ViewBag.EstaLogado = false;
             else
                 ViewBag.EstaLogado = true;
+
+            base.OnActionExecuted(context);
         }
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -54,9 +55,9 @@ namespace Estoque.MvcCore.Controllers
                 }
                 else
                 {
+                    Response.Cookies.Append("contador", validar.UsuarioId.ToString());
                     ClaimsPrincipal principal = CriarClaimsPrincipal(validar);
                     HttpContext.SignInAsync(principal);
-                    TempData["usuario_logado"] = validar.Nome;
 
                     return Json(new
                     {
@@ -88,9 +89,7 @@ namespace Estoque.MvcCore.Controllers
         private List<Claim> ListarClaims(AutenticacaoUsuarios usuarioSistema)
         {
             List<Claim> claims = new List<Claim>();
-
-            claims.Add(new Claim(ClaimTypes.NameIdentifier, usuarioSistema.Nome));
-            claims.Add(new Claim(ClaimTypes.Email, usuarioSistema.Email));
+            claims.Add(new Claim(ClaimTypes.UserData, JsonConvert.SerializeObject(usuarioSistema)));
 
             return claims;
         }

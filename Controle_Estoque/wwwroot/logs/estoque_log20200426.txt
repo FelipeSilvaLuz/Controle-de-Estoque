@@ -1,0 +1,2 @@
+2020-04-26 02:03:26.430 -03:00 [INF] Iniciando o sistema de estoque
+2020-04-26 02:12:43.948 -03:00 [INF] Iniciando o sistema de estoque

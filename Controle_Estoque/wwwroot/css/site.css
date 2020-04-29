@@ -1,8 +1,12 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
 body {
-    padding-top: 50px;
+    padding-top: 10px;
     padding-bottom: 20px;
+}
+
+.titulo_layout {
+    font-size: 30px;
 }
 
 /* Wrapping element */
@@ -45,7 +49,42 @@ body {
     top: 50%;
     left: 50%;
     position: absolute;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, 10%);
+    box-sizing: border-box;
+    padding: 20px 28px;
+}
+
+.painel_lateral {
+    width: 190px;
+    height: 450px;
+    padding: 20px 28px;
+    margin-top: 120px;
+    position: absolute;
+}
+
+.espaco_itens {
+    margin-top: 15px;
+}
+
+.glyphicon {
+    font-size: 16px;
+    color: white;
+}
+
+.btn-dark {
+    width: 150px;
+    text-align: left;
+}
+
+.painel_central_superior {
+    height: 60px;
+    padding: 10px 18px;
+}
+
+.painel_listagem_produtos {
+    height: 540px;
+    color: #fff;
+    background-color: rgba(0,0,5,0.8);
     box-sizing: border-box;
     padding: 20px 28px;
 }
@@ -109,3 +148,43 @@ h1 {
     .login a:hover {
         transition: 0.2s
     }
+
+
+
+
+.tabs-container {
+    margin: 0 auto;
+}
+
+ul.tabs {
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+    border-bottom: 1px solid #d7d7d7;
+}
+
+    ul.tabs li {
+        background: none;
+        color: #616161;
+        display: inline-block;
+        padding: 10px 15px;
+        cursor: pointer;
+    }
+
+        ul.tabs li.current {
+            color: #484848;
+            border-bottom: 2px solid #F65314;
+        }
+
+.tab-content {
+    display: none;
+    padding: 15px;
+}
+
+    .tab-content.current {
+        display: inherit;
+    }
+
+.tab-link:hover {
+    color: #FBBC05;
+}
