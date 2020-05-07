@@ -40,6 +40,101 @@
                 <div class="glyphicon glyphicon-cog" style="float:right;color:black; margin-top:12px;"></div>
                 <a href="#" class="" style="float:right; margin-right:20px; margin-top:10px;">LogOut</a>
             </div>
+
+            <div class="col-md-12" id="tabsTop">
+                <div class="board">
+                    <div class="board-inner">
+                        <div class="painel_lateral">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#tabsTop-1" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs one">
+                                            <em class="glyphicon glyphicon-briefcase"> Produtos </em>
+                                        </span>
+                                    </a>
+                                </li>
+                                <div style="margin-top:20px;"></div>
+                                <li>
+                                    <a href="#tabsTop-2" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs two">
+                                            <em class="glyphicon glyphicon-wrench"> Serviços </em>
+                                        </span>
+                                    </a>
+                                </li>
+                                <div style="margin-top:20px;"></div>
+                                <li>
+                                    <a href="#tabsTop-3" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs three">
+                                            <em class="glyphicon glyphicon-folder-open"> Estoque </em>
+                                        </span>
+                                    </a>
+                                </li>
+                                <div style="margin-top:20px;"></div>
+                                <li>
+                                    <a href="#tabsTop-4" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs four">
+                                            <em class="glyphicon glyphicon-plane"> Logistica </em>
+                                        </span>
+                                    </a>
+                                </li>
+                                <div style="margin-top:20px;"></div>
+                                <li>
+                                    <a href="#tabsTop-5" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs five">
+                                            <em class="glyphicon glyphicon-barcode"> Vendas </em>
+                                        </span>
+                                    </a>
+                                </li>
+                                <div style="margin-top:20px;"></div>
+                                <li>
+                                    <a href="#tabsTop-6" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs six">
+                                            <em class="glyphicon glyphicon-book"> Relatorios </em>
+                                        </span>
+                                    </a>
+                                </li>
+                                <div style="margin-top:20px;"></div>
+                                <li>
+                                    <a href="#tabsTop-7" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs six">
+                                            <em class="glyphicon glyphicon-flag"> Estatisticas </em>
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabsTop-1">
+                                @Html.Partial("Produtos")
+                            </div>
+
+                            <div class="tab-pane" id="tabsTop-2">
+                                @Html.Partial("Servicos")
+                            </div>
+
+                            <div class="tab-pane" id="tabsTop-3">
+                                @Html.Partial("Estoque")
+                            </div>
+
+                            <div class="tab-pane" id="tabsTop-4">
+                                @Html.Partial("Logistica")
+                            </div>
+
+                            <div class="tab-pane" id="tabsTop-5">
+                                @Html.Partial("Vendas")
+                            </div>
+
+                            <div class="tab-pane" id="tabsTop-6">
+                                @Html.Partial("Relatorios")
+                            </div>
+
+                            <div class="tab-pane" id="tabsTop-7">
+                                @Html.Partial("Estatisticas")
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
 
         @RenderBody()

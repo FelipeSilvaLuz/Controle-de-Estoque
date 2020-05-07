@@ -71,6 +71,11 @@ body {
     color: white;
 }
 
+.espaco_conteudo{
+    margin-top: 70px;
+    margin-left: 230px;
+}
+
 .btn-dark {
     width: 150px;
     text-align: left;
@@ -148,43 +153,3 @@ h1 {
     .login a:hover {
         transition: 0.2s
     }
-
-
-
-
-.tabs-container {
-    margin: 0 auto;
-}
-
-ul.tabs {
-    margin: 0px;
-    padding: 0px;
-    list-style: none;
-    border-bottom: 1px solid #d7d7d7;
-}
-
-    ul.tabs li {
-        background: none;
-        color: #616161;
-        display: inline-block;
-        padding: 10px 15px;
-        cursor: pointer;
-    }
-
-        ul.tabs li.current {
-            color: #484848;
-            border-bottom: 2px solid #F65314;
-        }
-
-.tab-content {
-    display: none;
-    padding: 15px;
-}
-
-    .tab-content.current {
-        display: inherit;
-    }
-
-.tab-link:hover {
-    color: #FBBC05;
-}

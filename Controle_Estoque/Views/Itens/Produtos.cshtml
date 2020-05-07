@@ -3,10 +3,28 @@
     ViewData["Title"] = "Produtos";
 }
 
+<div id="tabsTop-1" class="col-md-10 espaco_conteudo" style="border:solid">
+    <div class="col-md-10" id="tabs">
+        <ul class="nav nav-tabs">
+            <li class="active">
+                <a href="#contact_01" data-toggle="tab">
+                    <div class="btn btn-default">Consulta</div>
+                </a>
+            </li>
+            <li>
+                <a href="#contact_02" data-toggle="tab" id="">
+                    <div class="btn btn-default">Cadastro</div>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="contact_01">
+                @Html.Partial("_Consulta_Produto")
+            </div>
 
-<div id="tabsTop-1">
-    <div class="form-horizontal">
-        <h2>Produtos</h2>
-
+            <div class="tab-pane" id="contact_02">
+                @Html.Partial("_Cadastro_Produto")
+            </div>
+        </div>
     </div>
 </div>
