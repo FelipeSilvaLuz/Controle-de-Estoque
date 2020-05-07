@@ -35,6 +35,8 @@ namespace Controle_Estoque
             services.AddScoped<IConfiguracaoEstoque, ConfiguracaoEstoque>();
             services.AddScoped<IAutenticarUsuarioRepository, AutenticarUsuarioRepository>();
             services.AddScoped<IAutenticacaoUsuarioAppService, AutenticacaoUsuarioAppService>();
+            services.AddScoped<IProdutoAppService, ProdutoAppService>();
+            services.AddScoped<IProdutosRepository, ProdutosRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddAutoMapperSetup();

@@ -3,5 +3,61 @@
     ViewData["Title"] = "_Cadastro_Produto";
 }
 
-<h2>Cadastro_Produto</h2>
+<h2>Cadastrar Produtos</h2>
 
+<div>
+    <div class="row">
+        <div class="col-md-4">
+            <label>Código</label>
+            <input class="form-control codigoProduto" type="text" />
+            <br />
+        </div>
+        <div class="col-md-8">
+            <div>
+                <label>Nome Produto</label>
+            </div>
+            <input class="form-control nomeProduto" type="text" />
+            <br />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
+            <label>Descrição</label>
+            <input class="form-control descricaoProduto" type="text" />
+            <br />
+        </div>
+        <div class="col-md-2">
+            <label>Preço Custo (unidade)</label>
+            <input class="form-control precoCustoProduto" type="text" style="font-weight: bold;" id="" maxlength="200" />
+            <br />
+        </div>
+        <div class="col-md-2">
+            <label>Preço Venda (unidade)</label>
+            <input class="form-control precoVendaProduto" type="text" style="font-weight: bold;" id="" maxlength="200" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            <label>Quantidade</label>
+            <input class="form-control quantidadeProduto" type="text" style="font-weight: bold;" id="" maxlength="200" />
+            <br />
+        </div>
+        <div class="col-md-4">
+            <label>Anexar Foto</label>
+            <input type="file" class="form-control anexarFoto" name="figura" id="files" accept="image/png, image/jpeg" />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <label>Observações</label>
+            <textarea class="form-control observacaoProduto" id="" maxlength="300"></textarea>
+            <br />
+        </div>
+    </div>
+    <div style="float:right; margin-bottom: 50px">
+        <button type="button" class="btn btn-success salvarProduto">Confirmar</button>
+    </div>
+</div>
+
+<input id="urlSalvarProduto" type="hidden" value="@Url.Action("SalvarProduto", "Itens")" />
+<script src="~/js/Itens/produtos.js"></script>
