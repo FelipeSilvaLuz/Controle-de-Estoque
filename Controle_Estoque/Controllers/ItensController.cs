@@ -61,7 +61,38 @@ namespace Estoque.MvcCore.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao tentar fazer download do arquivo jurídico");
+                _logger.LogError(ex, "Erro ao tentar salvar produto");
+                return Json(new
+                {
+                    sucesso = false,
+                    tipo = "erro",
+                    mensagens = new List<string> { "Erro ao executar ação, tente novamente ou entre em contato com o administrador." }
+                });
+            }
+        }
+
+        [HttpGet]
+        public IActionResult BuscarTodosProdutos()
+        {
+            try
+            {
+                bool sucesso = true;
+                List<string> mensagens = new List<string>();
+
+                var listProdutos = _produtoAppService.BuscarProdutos();
+
+                return Json(new
+                {
+                    sucesso = sucesso,
+                    mensagens = mensagens,
+                    dados = listProdutos,
+                    tipo = true ? "sucesso" : "alerta"
+                });
+
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao tentar buscar produto");
                 return Json(new
                 {
                     sucesso = false,

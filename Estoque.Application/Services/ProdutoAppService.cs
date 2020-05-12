@@ -1,4 +1,5 @@
-﻿using Estoque.Application.Interfaces;
+﻿using AutoMapper;
+using Estoque.Application.Interfaces;
 using Estoque.Domain.Entities;
 using Estoque.Domain.Interfaces.Repositories;
 using Estoque.Util.Models;
@@ -13,10 +14,13 @@ namespace Estoque.Application.Services
     public class ProdutoAppService : IProdutoAppService
     {
         private readonly IProdutosRepository _produtosRepository;
+        private readonly IMapper _mapper;
         public ProdutoAppService(
-            IProdutosRepository produtosRepository)
+            IProdutosRepository produtosRepository,
+            IMapper mapper)
         {
             _produtosRepository = produtosRepository;
+            _mapper = mapper;
         }
         public bool SalvarProduto(ProdutoViewModel view, ref List<string> mensagens)
         {
@@ -44,6 +48,31 @@ namespace Estoque.Application.Services
             _produtosRepository.SaveChanges();
 
             return true;
+        }
+
+        public List<ProdutoViewModel> BuscarProdutos()
+        {
+            List<ProdutoViewModel> produtos = new List<ProdutoViewModel>();
+
+            var listaProdutos = _produtosRepository.GetAll().ToList();
+
+            foreach (var item in listaProdutos)
+            {
+                ProdutoViewModel produto = new ProdutoViewModel
+                {
+                    ProdutoId = item.ProdutoId,
+                    Codigo = item.Codigo,
+                    Descricao = item.Descricao,
+                    Nome = item.Nome,
+                    Observacao = item.Observacao,
+                    PrecoCusto = item.PrecoCusto,
+                    PrecoVenda = item.PrecoVenda,
+                    Quantidade = item.Quantidade
+                };
+
+                produtos.Add(produto);
+            }
+            return produtos;
         }
 
         public string ImageToBase64(IFormFile file)

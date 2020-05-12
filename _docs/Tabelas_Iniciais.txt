@@ -13,3 +13,21 @@ CREATE TABLE AutenticacaoUsuarios (
         ,	AlteradoEm		DateTime
         ,	AlteradoPor		VARCHAR(80)
         );
+
+
+CREATE TABLE Produtos (
+		ProdutoId		INT AUTO_INCREMENT PRIMARY KEY
+        ,	Codigo			VARCHAR(50)
+        ,	Nome			VARCHAR(80)
+        ,	Descricao		VARCHAR(200)
+        ,	PrecoCusto		double
+        ,	PrecoVenda		double
+        ,   Quantidade      bigint
+        ,	FotoBase64		varchar(10000)
+        ,	NomeFoto		varchar(50)
+        ,	Observacao		varchar(300)
+        ,	CriadoEm		DateTime
+        ,	CriadoPor		VARCHAR(80)
+        ,	AlteradoEm		DateTime
+        ,	AlteradoPor		VARCHAR(80)
+        );

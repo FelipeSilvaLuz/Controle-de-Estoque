@@ -3,4 +3,23 @@
     ViewData["Title"] = "Consulta_Produto";
 }
 
-<h2>Consulta_Produto</h2>
+<h2>Listagem dos produtos</h2>
+
+<div class="tab-content" style="margin-top:70px">
+    <div class="tab-pane active" role="tabpanel">
+        <table class="table table-striped" id="tbListaProdutos">
+            <thead>
+                <tr>
+                    <th scope="col"><strong>Código</strong></th>
+                    <th scope="col"><strong>Nome Produto</strong></th>
+                    <th scope="col"><strong>Preço Venda</strong></th>
+                    <th scope="col"><strong>Quantidade</strong></th>
+                </tr>
+            </thead>
+            <tbody class="cols-wl-center">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<input id="urlBuscarProdutos" type="hidden" value="@Url.Action("BuscarTodosProdutos", "Itens")" />
