@@ -96,10 +96,10 @@ function SalvarProduto_OnClick() {
         }
         else {
             if (retorno.tipo === 'erro') {
-
+                abrirDialogErroMensagem(retorno.mensagens);
             }
             else {
-
+                abrirDialogAlertaListaMensagem(retorno.mensagens);
             }
         }
     }).fail(function () { bloqueioDeTela(false); }).always(function () { bloqueioDeTela(false); });

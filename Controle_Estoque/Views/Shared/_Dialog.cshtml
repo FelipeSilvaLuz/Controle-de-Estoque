@@ -1,38 +1,34 @@
-﻿<div class="container navbar-fixed-top">
-    <div id="dialogWarning" class="" hidden>
-        <div class="alert alert-warning  col-md-12  alert-dismissable" role="alert">
-            <div class="col-md-11">
-                <span id="alertText"></span>
-            </div>
-            <div class="col-md-1">
-                <button id="btnCloseDialogWarning" type="button" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
+﻿
+<div id="dialogWarning" class="row alert alert-warning col-md-8 janelaMensagens invisible">
+    <div class="col-md-11">
+        <p id="alertText"></p>
     </div>
-    <div id="dialogError" hidden>
-        <div class="alert alert-danger col-md-12 alert-dismissable" role="alert">
-            <div class="col-md-11">
-                <p id="errorText"></p>
-            </div>
-            <div class="col-md-1">
-                <button id="btnCloseDialogError" type="button" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-    </div>
-    <div id="dialogSuccess" hidden>
-        <div class="alert alert-success  col-md-12 alert-dismissable" role="alert">
-            <div class="col-md-11">
-                <p id="successText"></p>
-            </div>
-            <div class="col-md-1">
-                <button id="btnCloseDialogSuccess" type="button" class="close" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
+    <div class="col-md-1" style="float:right">
+        <button id="btnCloseDialogWarning" type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 </div>
+
+<div id="dialogError" class="alert alert-danger col-md-8 janelaMensagens invisible">
+    <div class="col-md-11">
+        <p id="errorText"></p>
+    </div>
+    <div class="col-md-1" style="float:right">
+        <button id="btnCloseDialogError" type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+
+<div id="dialogSuccess" class="row alert alert-success col-md-8 janelaMensagens invisible">
+    <div class="col-md-11">
+        <p id="successText"></p>
+    </div>
+    <div class="col-md-1" style="float:right">
+        <button id="btnCloseDialogSuccess" type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+<script src="~/js/Shared/custom-dialog.js"></script>

@@ -86,8 +86,11 @@ namespace Estoque.Application.Services
         {
             List<string> mensagens = new List<string>();
 
+            if (view.Codigo == null || view.Codigo?.Trim() == string.Empty)
+                mensagens.Add("Preencha o campo Código");
+
             if (view.Nome == null || view.Nome?.Trim() == string.Empty)
-                mensagens.Add("Preencha o campo Nome");
+                mensagens.Add("Preencha o campo Nome Produto");
 
             if (view.Observacao == null || view.Observacao?.Trim() == string.Empty)
                 mensagens.Add("Preencha o campo Observação");

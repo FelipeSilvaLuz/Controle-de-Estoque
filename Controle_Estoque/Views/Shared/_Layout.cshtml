@@ -22,7 +22,6 @@
 </head>
 <body>
     <partial name="_CookieConsentPartial" />
-
     <div class="container body-content col-md-12">
         @if (verLayout)
         {
@@ -32,7 +31,6 @@
                 <div class="glyphicon glyphicon-cog" style="float:right;color:black; margin-top:12px;"></div>
                 <a href="#" class="" style="float:right; margin-right:20px; margin-top:10px;">LogOut</a>
             </div>
-
             <div class="col-md-12" id="tabsTop">
                 <div class="board">
                     <div class="board-inner">
@@ -128,14 +126,14 @@
                 </div>
             </div>
         }
-
         @RenderBody()
     </div>
     <img alt="" src="~/images/loading.gif" id="domMessage" class="tela_aguarde" />
 
-    @RenderSection("Scripts", required: false)
     <script src="~/js/Shared/custom-datatable.js"></script>
     <script src="~/js/Shared/custom-site.js"></script>
     <script src="~/js/Shared/custom-dialog.js"></script>
+    <partial name="_Dialog" />
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

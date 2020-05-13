@@ -3,18 +3,18 @@
 function abrirDialogAlertaListaMensagem(mensagens) {
     adicionarTextosNaDiv($('#alertText'), mensagens);
 
-    $('#dialogWarning').show();
+    $('#dialogWarning').removeClass('invisible').addClass('visible');
 }
 
 function abrirDialogAlertaMensagem(mensagem) {
     $('#alertText').text(mensagem);
-    $('#dialogWarning').show();
+    $('#dialogWarning').removeClass('invisible').addClass('visible');
 }
 
 function abrirDialogErroListaMensagem(mensagens) {
     adicionarTextosNaDiv($('#errorText'), mensagens);
 
-    $('#dialogError').show();
+    $('#dialogError').removeClass('invisible').addClass('visible');
 }
 
 function abrirDialogErroMensagem(mensagem) {
@@ -23,13 +23,13 @@ function abrirDialogErroMensagem(mensagem) {
     }
 
     $('#errorText').text(mensagem);
-    $('#dialogError').show();
+    $('#dialogError').removeClass('invisible').addClass('visible');
 }
 
 function abrirDialogSucessoListaMensagem(mensagens) {
     adicionarTextosNaDiv($('#successText'), mensagens);
 
-    $('#dialogSuccess').show();
+    $('#dialogSuccess').removeClass('invisible').addClass('visible');
 }
 
 function abrirDialogSucessoMensagem(mensagem, acaoAoFechar) {
@@ -38,7 +38,7 @@ function abrirDialogSucessoMensagem(mensagem, acaoAoFechar) {
         funcaoAoFechar = acaoAoFechar;
 
     $('#successText').text(mensagem);
-    $('#dialogSuccess').show();
+    $('#dialogSuccess').removeClass('invisible').addClass('visible');
 }
 
 function adicionarTextosNaDiv(elemento, textos) {
@@ -52,7 +52,7 @@ function adicionarTextosNaDiv(elemento, textos) {
 }
 
 function fecharDialog(elemento) {
-    elemento.hide();
+    elemento.removeClass('visible').addClass('invisible');
 
     if (funcaoAoFechar || funcaoAoFechar !== null)
         funcaoAoFechar();

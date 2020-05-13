@@ -40,6 +40,16 @@ body {
     }
 }
 
+.janelaMensagens {
+    position: fixed;
+    z-index: 999;
+    left: 0px;
+    right: 0px;
+    top: 0;
+    overflow: hidden;
+    margin: auto
+}
+
 .login {
     width: 380px;
     height: 500px;
