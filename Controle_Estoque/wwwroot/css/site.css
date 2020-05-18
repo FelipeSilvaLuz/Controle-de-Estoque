@@ -50,6 +50,48 @@ body {
     margin: auto
 }
 
+.custom-center {
+    text-align: center !important;
+}
+
+.custom-right {
+    text-align: right !important;
+}
+
+.custom-left {
+    text-align: left !important;
+}
+
+.col-codigo-produto {
+    min-width: 70px !important;
+    max-width: 70px !important;
+}
+
+.col-produtoId-produto {
+    min-width: 10px !important;
+    max-width: 10px !important;
+}
+
+.col-nome-produto {
+    min-width: 250px !important;
+    max-width: 250px !important;
+}
+
+.col-valor-venda-produto {
+    min-width: 60px !important;
+    max-width: 60px !important;
+}
+
+.col-quantidade-produto {
+    min-width: 40px !important;
+    max-width: 40px !important;
+}
+
+.col-acoes-produto {
+    min-width: 40px !important;
+    max-width: 40px !important;
+}
+
 .login {
     width: 380px;
     height: 500px;
@@ -81,11 +123,6 @@ body {
 
 .espaco_itens {
     margin-top: 15px;
-}
-
-.glyphicon {
-    font-size: 16px;
-    color: white;
 }
 
 .espaco_conteudo{

@@ -29,24 +29,39 @@ namespace Estoque.Application.Services
             if (mensagens.Any())
                 return false;
 
-            Produtos produto = new Produtos
+            var buscaProduto = _produtosRepository.Get(x => x.Codigo == view.Codigo).FirstOrDefault();
+
+            Produtos produtos = new Produtos();
+
+            produtos.Nome = view.Nome;
+            produtos.Descricao = view.Descricao;
+            produtos.Observacao = view.Observacao;
+            produtos.PrecoCusto = view.PrecoCusto;
+            produtos.PrecoVenda = view.PrecoVenda;
+            produtos.Quantidade = view.Quantidade;
+            produtos.Codigo = view.Codigo;
+            produtos.FotoBase64 = ImageToBase64(view.files);
+            produtos.NomeFoto = view.files.FileName.Substring(0, view.files.FileName.IndexOf('.'));
+
+            if (buscaProduto == null)
             {
-                Nome = view.Nome,
-                Descricao = view.Descricao,
-                Observacao = view.Observacao,
-                PrecoCusto = view.PrecoCusto,
-                PrecoVenda = view.PrecoVenda,
-                Quantidade = view.Quantidade,
-                NomeFoto = view.files.FileName.Substring(0, view.files.FileName.IndexOf('.')),
-                Codigo = view.Codigo,
-                CriadoEm = DateTime.Now,
-                CriadoPor = "usuario logado",
-                FotoBase64 = ImageToBase64(view.files)
-            };
+                produtos.CriadoEm = DateTime.Now;
+                produtos.CriadoPor = "usuario logado";
 
-            _produtosRepository.Create(produto);
+                _produtosRepository.Create(produtos);
+            }
+            else
+            {
+                produtos.ProdutoId = buscaProduto.ProdutoId;
+                produtos.AlteradoEm = DateTime.Now;
+                produtos.CriadoEm = buscaProduto.CriadoEm;
+                produtos.CriadoPor = buscaProduto.CriadoPor;
+                produtos.AlteradoPor = "usuario logado";
+
+                _produtosRepository.Update(produtos);
+            }
+
             _produtosRepository.SaveChanges();
-
             return true;
         }
 
@@ -67,7 +82,8 @@ namespace Estoque.Application.Services
                     Observacao = item.Observacao,
                     PrecoCusto = item.PrecoCusto,
                     PrecoVenda = item.PrecoVenda,
-                    Quantidade = item.Quantidade
+                    Quantidade = item.Quantidade,
+                    Base64 = item.FotoBase64
                 };
 
                 produtos.Add(produto);
@@ -94,6 +110,9 @@ namespace Estoque.Application.Services
 
             if (view.Observacao == null || view.Observacao?.Trim() == string.Empty)
                 mensagens.Add("Preencha o campo Observação");
+
+            if (view.Descricao == null || view.Descricao?.Trim() == string.Empty)
+                mensagens.Add("Preencha o campo Descricao");
 
             if (view.Quantidade == 0)
                 mensagens.Add("Preencha o campo Quantidade");

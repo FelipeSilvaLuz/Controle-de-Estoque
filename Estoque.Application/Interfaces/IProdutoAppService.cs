@@ -1,4 +1,5 @@
 ﻿using Estoque.Util.Models;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 
 namespace Estoque.Application.Interfaces
@@ -7,5 +8,6 @@ namespace Estoque.Application.Interfaces
     {
         bool SalvarProduto(ProdutoViewModel view, ref List<string> mensagens);
         List<ProdutoViewModel> BuscarProdutos();
+        string ImageToBase64(IFormFile file);
     }
 }

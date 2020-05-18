@@ -9,55 +9,61 @@
     <div class="row">
         <div class="col-md-4">
             <label>Código</label>
-            <input class="form-control codigoProduto" type="text" />
+            <input class="form-control codigoProduto" type="text" maxlength="50" />
             <br />
         </div>
         <div class="col-md-8">
             <div>
                 <label>Nome Produto</label>
             </div>
-            <input class="form-control nomeProduto" type="text" />
+            <input class="form-control nomeProduto" type="text" maxlength="80" />
             <br />
         </div>
     </div>
     <div class="row">
         <div class="col-md-8">
             <label>Descrição</label>
-            <input class="form-control descricaoProduto" type="text" />
+            <input class="form-control descricaoProduto" type="text" maxlength="200" />
             <br />
         </div>
         <div class="col-md-2">
             <label>Preço Custo (unidade)</label>
-            <input class="form-control precoCustoProduto" type="text" style="font-weight: bold;" maxlength="200" />
+            <input class="form-control precoCustoProduto" type="text" style="font-weight: bold;" />
             <br />
         </div>
         <div class="col-md-2">
             <label>Preço Venda (unidade)</label>
-            <input class="form-control precoVendaProduto" type="text" style="font-weight: bold;" maxlength="200" />
+            <input class="form-control precoVendaProduto" type="text" style="font-weight: bold;" />
         </div>
     </div>
     <div class="row">
-        <div class="col-md-2">
-            <label>Quantidade</label>
-            <input class="form-control quantidadeProduto" type="text" style="font-weight: bold;" maxlength="200" />
-            <br />
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label>Anexar Foto</label>
             <input type="file" class="form-control anexarFoto" name="figura" id="files" accept="image/png, image/jpeg" />
         </div>
+        <div class="col-md-3">
+            <label>Quantidade</label>
+            <input class="form-control quantidadeProduto" type="text" style="font-weight: bold;" />
+            <br />
+        </div>
     </div>
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
+            <label>Preview da Foto Anexada</label>
+            <img style="height:200px;" class="form-control previewImage" />
+        </div>
+        <div class="col-md-6">
             <label>Observações</label>
-            <textarea class="form-control observacaoProduto" id="" maxlength="300"></textarea>
+            <textarea style="height:200px;" class="form-control observacaoProduto" id="" maxlength="300"></textarea>
             <br />
         </div>
     </div>
     <div style="float:right; margin-bottom: 50px">
-        <button type="button" class="btn btn-success salvarProduto">Confirmar</button>
+        <button type="button" class="btn btn-success salvarProduto">Confirmar Cadastro</button>
     </div>
 </div>
 
 <input id="urlSalvarProduto" type="hidden" value="@Url.Action("SalvarProduto", "Itens")" />
+<input id="urlBuscarPorCodigo" type="hidden" value="@Url.Action("BuscarProdutoPorCodigo", "Itens")" />
+<input id="urlImageToBase64" type="hidden" value="@Url.Action("ImageToBase64", "Itens")" />
 <script src="~/js/Itens/produtos.js"></script>
