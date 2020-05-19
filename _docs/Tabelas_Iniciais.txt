@@ -22,7 +22,7 @@ CREATE TABLE Produtos (
         ,	Descricao		VARCHAR(200)
         ,	PrecoCusto		double
         ,	PrecoVenda		double
-        ,   Quantidade      bigint
+        ,   Quantidade      double
         ,	FotoBase64		varchar(10000)
         ,	NomeFoto		varchar(50)
         ,	Observacao		varchar(300)

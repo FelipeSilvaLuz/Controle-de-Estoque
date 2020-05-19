@@ -1,5 +1,4 @@
-﻿
-let listaProdutos = [];
+﻿let listaProdutos = [];
 let tabelaProdutos = {};
 
 function apiBuscarProdutos() {
@@ -7,6 +6,18 @@ function apiBuscarProdutos() {
     return $.ajax({
         type: "GET",
         url: urlBuscarProdutos,
+        data: {},
+        contentType: "application/json; charset=utf-8",
+        processData: true,
+        traditional: true
+    });
+}
+
+function apiBuscarPorCodigo(codigo) {
+    var urlBuscarPorCodigo = $('#urlBuscarPorCodigo').val();
+    return $.ajax({
+        type: "GET",
+        url: urlBuscarPorCodigo + "?codigoProduto=" + codigo,
         data: {},
         contentType: "application/json; charset=utf-8",
         processData: true,
@@ -25,18 +36,6 @@ function apiImageToBase64(formData) {
     });
 }
 
-function apiBuscarPorCodigo(codigo) {
-    var urlBuscarPorCodigo = $('#urlBuscarPorCodigo').val();
-    return $.ajax({
-        type: "GET",
-        url: urlBuscarPorCodigo + "?codigoProduto=" + codigo,
-        data: {},
-        contentType: "application/json; charset=utf-8",
-        processData: true,
-        traditional: true
-    });
-}
-
 function apiSalvarProduto(formData) {
     var urlSalvarProduto = $('#urlSalvarProduto').val();
     return $.ajax({
@@ -52,6 +51,40 @@ function aplicandoMascaras() {
     $('.quantidadeProduto').mask("000.000.000", { reverse: true });
     $('.precoCustoProduto').mask("000.000.000,00", { reverse: true });
     $('.precoVendaProduto').mask("000.000.000,00", { reverse: true });
+}
+
+function BuscarPorCodigo() {
+
+    let codigo = $('.codigoProduto').val();
+
+    apiBuscarPorCodigo(codigo).done(function (retorno) {
+        if (retorno.sucesso) {
+            $('.nomeProduto').val(retorno.dados.nome);
+            $('.descricaoProduto').val(retorno.dados.descricao);
+            $('.precoCustoProduto').val(retorno.dados.precoCustoExibir);
+            $('.precoVendaProduto').val(retorno.dados.precoVendaExibir);
+            $('.quantidadeProduto').val(retorno.dados.quantidadeExibir);
+            $('.observacaoProduto').val(retorno.dados.observacao);
+            $('#files').val('');
+
+            $('.previewImage').removeAttr('src');
+            $('.previewImage').attr('src', 'data:image/jpeg;base64, ' + retorno.dados.base64);
+
+            $('.salvarProduto').text('Alterar Cadastro');
+        }
+        else {
+            $('.nomeProduto').val('');
+            $('.descricaoProduto').val('');
+            $('.precoCustoProduto').val('');
+            $('.precoVendaProduto').val('');
+            $('.quantidadeProduto').val('');
+            $('.observacaoProduto').val('');
+            $('#files').val('');
+            $('.previewImage').removeAttr('src');
+
+            $('.salvarProduto').text('Confirmar Cadastro');
+        }
+    });
 }
 
 function BuscarProdutos() {
@@ -102,7 +135,7 @@ function configuracaoDasColunasDeProdutos() {
             "data": "precoVendaExibir",
             className: "custom-right col-valor-venda-produto"
         }, {
-            "data": "quantidade",
+            "data": "quantidadeExibir",
             className: "custom-right col-quantidade-produto"
         }, {
             "data": null,
@@ -124,9 +157,50 @@ function configuracaoDasColunasProdutosRenderBotoes(data, type, row) {
     return retorno;
 }
 
+function LimparCamposCadastro() {
+    $('.codigoProduto').val('');
+    $('.nomeProduto').val('');
+    $('.descricaoProduto').val('');
+    $('.precoCustoProduto').val('');
+    $('.precoVendaProduto').val('');
+    $('.quantidadeProduto').val('');
+    $('.observacaoProduto').val('');
+    $('.previewImage').removeAttr('src');
+    $('#files').val('');
+}
+
+function PreviewFotoAnexada_OnChange() {
+
+    var files = $('#files')[0].files[0];
+
+    var formData = new FormData();
+    formData.append("files", files);
+
+    apiImageToBase64(formData).done(function (retorno) {
+        if (retorno.sucesso) {
+
+            $('.previewImage').removeAttr('src');
+            $('.previewImage').attr('src', 'data:image/jpeg;base64, ' + retorno.dados);
+
+        }
+        else {
+            if (retorno.tipo === 'erro') {
+
+            }
+            else {
+
+            }
+        }
+    });
+}
+
 function SalvarProduto_OnClick() {
     bloqueioDeTela(true);
     var files = $('#files')[0].files[0];
+    var existeFoto = false;
+
+    if ($('.previewImage').attr('src') != '')
+        existeFoto = true;
 
     var formData = new FormData();
     formData.append("files", files);
@@ -137,6 +211,7 @@ function SalvarProduto_OnClick() {
     formData.append("precoVenda", $('.precoVendaProduto').val());
     formData.append("quantidade", $('.quantidadeProduto').val());
     formData.append("observacao", $('.observacaoProduto').val());
+    formData.append("existeFoto", existeFoto);
 
     apiSalvarProduto(formData).done(function (retorno) {
         if (retorno.sucesso) {
@@ -153,75 +228,6 @@ function SalvarProduto_OnClick() {
         }
     }).fail(function () { bloqueioDeTela(false); }).always(function () { bloqueioDeTela(false); });
 }
-
-function LimparCamposCadastro() {
-    $('.codigoProduto').val('');
-    $('.nomeProduto').val('');
-    $('.descricaoProduto').val('');
-    $('.precoCustoProduto').val('');
-    $('.precoVendaProduto').val('');
-    $('.quantidadeProduto').val('');
-    $('.observacaoProduto').val('');
-    $('#files').val('');
-}
-
-function BuscarPorCodigo() {
-
-    let codigo = $('.codigoProduto').val();
-
-    apiBuscarPorCodigo(codigo).done(function (retorno) {
-        if (retorno.sucesso) {
-            $('.nomeProduto').val(retorno.dados.nome);
-            $('.descricaoProduto').val(retorno.dados.descricao);
-            $('.precoCustoProduto').val(retorno.dados.precoCusto);
-            $('.precoVendaProduto').val(retorno.dados.precoVenda);
-            $('.quantidadeProduto').val(retorno.dados.quantidade);
-            $('.observacaoProduto').val(retorno.dados.observacao);
-
-            $('.previewImage').attr('src', '');
-            $('.previewImage').attr('src', 'data:image/jpeg;base64, ' + retorno.dados.base64);
-
-            $('.salvarProduto').text('Alterar Cadastro');
-        }
-        else {
-            $('.nomeProduto').val('');
-            $('.descricaoProduto').val('');
-            $('.precoCustoProduto').val('');
-            $('.precoVendaProduto').val('');
-            $('.quantidadeProduto').val('');
-            $('.observacaoProduto').val('');
-            $('.previewImage').attr('src', '');
-
-            $('.salvarProduto').text('Confirmar Cadastro');
-        }
-    });
-}
-
-function PreviewFotoAnexada_OnChange() {
-
-    var files = $('#files')[0].files[0];
-
-    var formData = new FormData();
-    formData.append("files", files);
-
-    apiImageToBase64(formData).done(function (retorno) {
-        if (retorno.sucesso) {
-
-            $('.previewImage').attr('src', '');
-            $('.previewImage').attr('src', 'data:image/jpeg;base64, ' + retorno.dados);
-
-        }
-        else {
-            if (retorno.tipo === 'erro') {
-
-            }
-            else {
-
-            }
-        }
-    });
-}
-
 
 function documentoLoginReady() {
 

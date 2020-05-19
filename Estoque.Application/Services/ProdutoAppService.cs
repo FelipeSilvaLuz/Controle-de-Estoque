@@ -13,56 +13,15 @@ namespace Estoque.Application.Services
 {
     public class ProdutoAppService : IProdutoAppService
     {
-        private readonly IProdutosRepository _produtosRepository;
         private readonly IMapper _mapper;
+        private readonly IProdutosRepository _produtosRepository;
+
         public ProdutoAppService(
             IProdutosRepository produtosRepository,
             IMapper mapper)
         {
             _produtosRepository = produtosRepository;
             _mapper = mapper;
-        }
-        public bool SalvarProduto(ProdutoViewModel view, ref List<string> mensagens)
-        {
-            mensagens = ValidarCampos(view);
-
-            if (mensagens.Any())
-                return false;
-
-            var buscaProduto = _produtosRepository.Get(x => x.Codigo == view.Codigo).FirstOrDefault();
-
-            Produtos produtos = new Produtos();
-
-            produtos.Nome = view.Nome;
-            produtos.Descricao = view.Descricao;
-            produtos.Observacao = view.Observacao;
-            produtos.PrecoCusto = view.PrecoCusto;
-            produtos.PrecoVenda = view.PrecoVenda;
-            produtos.Quantidade = view.Quantidade;
-            produtos.Codigo = view.Codigo;
-            produtos.FotoBase64 = ImageToBase64(view.files);
-            produtos.NomeFoto = view.files.FileName.Substring(0, view.files.FileName.IndexOf('.'));
-
-            if (buscaProduto == null)
-            {
-                produtos.CriadoEm = DateTime.Now;
-                produtos.CriadoPor = "usuario logado";
-
-                _produtosRepository.Create(produtos);
-            }
-            else
-            {
-                produtos.ProdutoId = buscaProduto.ProdutoId;
-                produtos.AlteradoEm = DateTime.Now;
-                produtos.CriadoEm = buscaProduto.CriadoEm;
-                produtos.CriadoPor = buscaProduto.CriadoPor;
-                produtos.AlteradoPor = "usuario logado";
-
-                _produtosRepository.Update(produtos);
-            }
-
-            _produtosRepository.SaveChanges();
-            return true;
         }
 
         public List<ProdutoViewModel> BuscarProdutos()
@@ -93,11 +52,86 @@ namespace Estoque.Application.Services
 
         public string ImageToBase64(IFormFile file)
         {
+            if (file == null)
+                return string.Empty;
+
             MemoryStream memoryStream = new MemoryStream();
             file.CopyTo(memoryStream);
 
             return Convert.ToBase64String(memoryStream.ToArray());
         }
+
+        public bool SalvarProduto(ProdutoViewModel view, ref List<string> mensagens)
+        {
+            mensagens = ValidarCampos(view);
+
+            if (mensagens.Any())
+                return false;
+
+            var buscaProduto = _produtosRepository.Get(x => x.Codigo == view.Codigo).FirstOrDefault();
+
+            if (buscaProduto == null)
+                CriarNovoProduto(view);
+            else
+                AlterarProduto(view, buscaProduto);
+
+            return true;
+        }
+
+        private bool AlterarProduto(ProdutoViewModel view, Produtos buscaProduto)
+        {
+            Produtos produtos = new Produtos();
+
+            produtos.ProdutoId = buscaProduto.ProdutoId;
+            produtos.Nome = view.Nome;
+            produtos.Descricao = view.Descricao;
+            produtos.Observacao = view.Observacao;
+            produtos.PrecoCusto = view.PrecoCusto;
+            produtos.PrecoVenda = view.PrecoVenda;
+            produtos.Quantidade = view.Quantidade;
+            produtos.Codigo = view.Codigo;
+            produtos.AlteradoEm = DateTime.Now;
+            produtos.AlteradoPor = "usuario logado";
+
+            if (view.files != null)
+            {
+                produtos.FotoBase64 = ImageToBase64(view.files);
+                produtos.NomeFoto = view.files.FileName.Substring(0, view.files.FileName.IndexOf('.'));
+            }
+            else
+            {
+                produtos.FotoBase64 = buscaProduto.FotoBase64;
+                produtos.NomeFoto = buscaProduto.NomeFoto;
+            }
+
+            _produtosRepository.Update(produtos);
+            _produtosRepository.SaveChanges();
+
+            return true;
+        }
+
+        private bool CriarNovoProduto(ProdutoViewModel view)
+        {
+            Produtos produtos = new Produtos();
+
+            produtos.Nome = view.Nome;
+            produtos.Descricao = view.Descricao;
+            produtos.Observacao = view.Observacao;
+            produtos.PrecoCusto = view.PrecoCusto;
+            produtos.PrecoVenda = view.PrecoVenda;
+            produtos.Quantidade = view.Quantidade;
+            produtos.Codigo = view.Codigo;
+            produtos.FotoBase64 = ImageToBase64(view.files);
+            produtos.NomeFoto = view.files.FileName.Substring(0, view.files.FileName.IndexOf('.'));
+            produtos.CriadoEm = DateTime.Now;
+            produtos.CriadoPor = "usuario logado";
+
+            _produtosRepository.Create(produtos);
+            _produtosRepository.SaveChanges();
+
+            return true;
+        }
+
         private List<string> ValidarCampos(ProdutoViewModel view)
         {
             List<string> mensagens = new List<string>();
@@ -117,7 +151,7 @@ namespace Estoque.Application.Services
             if (view.Quantidade == 0)
                 mensagens.Add("Preencha o campo Quantidade");
 
-            if (view.files == null)
+            if (view.files == null && view.ExisteFoto == false)
                 mensagens.Add("Preencha o campo Foto");
 
             if (view.PrecoCusto == 0)

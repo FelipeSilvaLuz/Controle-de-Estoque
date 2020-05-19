@@ -14,7 +14,7 @@ namespace Estoque.Domain.Entities
         public string Descricao { get; set; }
         public double PrecoCusto { get; set; }
         public double PrecoVenda { get; set; }
-        public long? Quantidade { get; set; }
+        public double Quantidade { get; set; }
         public string FotoBase64 { get; set; }
         public string NomeFoto { get; set; }
         public string Observacao { get; set; }

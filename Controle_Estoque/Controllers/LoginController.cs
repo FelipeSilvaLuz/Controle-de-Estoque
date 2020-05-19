@@ -18,6 +18,7 @@ namespace Estoque.MvcCore.Controllers
         private readonly IAutenticacaoUsuarioAppService _autenticacaoUsuarioAppService;
         private readonly ILogger<LoginController> _logger;
         private readonly IMapper _mapper;
+
         public LoginController(
             IAutenticacaoUsuarioAppService autenticacaoUsuarioAppService,
             ILogger<LoginController> logger,
@@ -27,9 +28,18 @@ namespace Estoque.MvcCore.Controllers
             _logger = logger;
             _mapper = mapper;
         }
+
         public IActionResult Autenticar()
         {
             return View();
+        }
+
+        public ClaimsPrincipal CriarClaimsPrincipal(AutenticacaoUsuarios usuarioSistema)
+        {
+            List<Claim> claims = ListarClaims(usuarioSistema);
+            ClaimsIdentity identities = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
+
+            return new ClaimsPrincipal(new[] { identities });
         }
 
         [HttpPost]
@@ -77,13 +87,6 @@ namespace Estoque.MvcCore.Controllers
                     mensagens = new List<string> { "Erro ao executar ação, tente novamente ou entre em contato com o administrador." }
                 });
             }
-        }
-        public ClaimsPrincipal CriarClaimsPrincipal(AutenticacaoUsuarios usuarioSistema)
-        {
-            List<Claim> claims = ListarClaims(usuarioSistema);
-            ClaimsIdentity identities = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
-
-            return new ClaimsPrincipal(new[] { identities });
         }
 
         private List<Claim> ListarClaims(AutenticacaoUsuarios usuarioSistema)
