@@ -17,7 +17,7 @@ CREATE TABLE AutenticacaoUsuarios (
 
 CREATE TABLE Produtos (
 		ProdutoId		INT AUTO_INCREMENT PRIMARY KEY
-        ,	Codigo			VARCHAR(50)
+        ,	Codigo			VARCHAR(50) PRIMARY KEY
         ,	Nome			VARCHAR(80)
         ,	Descricao		VARCHAR(200)
         ,	PrecoCusto		double

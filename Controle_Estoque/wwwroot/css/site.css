@@ -27,6 +27,25 @@ body {
     width: 100%;
 }
 
+.modal-tamanho {
+    width:auto;
+    margin-top: 15%;
+}
+
+.modal-remove{
+    width: 800px;
+}
+
+.modal-grande {
+    max-width: 95%;
+    min-width: 90%;
+    max-height: 95%;
+    min-height: 90%;
+    width: auto !important;
+    height: auto !important;
+    display: table;
+}
+
 /* QR code generator */
 #qrCode {
     margin: 15px;
@@ -119,6 +138,7 @@ body {
     height: 450px;
     padding: 20px 28px;
     position: absolute;
+    margin-top:50px;
 }
 
 .espaco_itens {

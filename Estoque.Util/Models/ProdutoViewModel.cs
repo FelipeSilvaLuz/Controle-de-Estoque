@@ -11,6 +11,7 @@ namespace Estoque.Util.Models
         public bool ExisteFoto { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
+        public string ValorEstoqueExibir { get { return SomaProdutos(PrecoVenda, Quantidade); } }
         public double PrecoCusto { get; set; }
         public string PrecoCustoExibir { get { return ConverterParaMonetario(PrecoCusto); } }
         public double PrecoVenda { get; set; }
@@ -36,6 +37,13 @@ namespace Estoque.Util.Models
             var resultado = Convert.ToDecimal(valor).ToString("#,##0");
 
             return resultado;
+        }
+
+        public string SomaProdutos(double precoVenda, double quantidade)
+        {
+            var soma = precoVenda * quantidade;
+
+            return soma.ToString("C2", CultureInfo.CurrentCulture);
         }
     }
 }

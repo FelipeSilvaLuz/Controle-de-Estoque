@@ -40,7 +40,7 @@ namespace Estoque.MvcCore.Controllers
                     return Json(new
                     {
                         sucesso = sucesso,
-                        tipo = true ? "sucesso" : "alerta"
+                        tipo = sucesso ? "sucesso" : "alerta"
                     });
                 }
                 else
@@ -50,7 +50,7 @@ namespace Estoque.MvcCore.Controllers
                         sucesso = sucesso,
                         mensagens = mensagens,
                         dados = produtoPorCodigo,
-                        tipo = true ? "sucesso" : "alerta"
+                        tipo = sucesso ? "sucesso" : "alerta"
                     });
                 }
             }
@@ -132,6 +132,49 @@ namespace Estoque.MvcCore.Controllers
             ViewBag.verBotoes = true;
 
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult RemoverProduto(string codigo)
+        {
+            try
+            {
+                bool sucesso = true;
+                List<string> mensagens = new List<string>();
+
+                sucesso = _produtoAppService.RemoverProduto(codigo);
+
+                if (sucesso)
+                {
+                    mensagens.Add("Produto removido com sucesso!");
+                    return Json(new
+                    {
+                        sucesso = sucesso,
+                        mensagens = mensagens,
+                        tipo = true ? "sucesso" : "alerta"
+                    });
+                }
+                else
+                {
+                    mensagens.Add("Não foi possível remover o produto selecionado, tente novamente ou contate o administrador!");
+                    return Json(new
+                    {
+                        sucesso = sucesso,
+                        mensagens = mensagens,
+                        tipo = true ? "sucesso" : "alerta"
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao tentar remover produto");
+                return Json(new
+                {
+                    sucesso = false,
+                    tipo = "erro",
+                    mensagens = new List<string> { "Erro ao executar ação, tente novamente ou entre em contato com o administrador." }
+                });
+            }
         }
 
         [HttpPost]

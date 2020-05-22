@@ -61,6 +61,20 @@ namespace Estoque.Application.Services
             return Convert.ToBase64String(memoryStream.ToArray());
         }
 
+        public bool RemoverProduto(string codigo)
+        {
+            var produto = _produtosRepository.Get(x => x.Codigo == codigo).FirstOrDefault();
+
+            if (produto != null)
+            {
+                _produtosRepository.Delete(new object[] { produto.ProdutoId, produto.Codigo });
+                _produtosRepository.SaveChanges();
+
+                return true;
+            }
+            return false;
+        }
+
         public bool SalvarProduto(ProdutoViewModel view, ref List<string> mensagens)
         {
             mensagens = ValidarCampos(view);

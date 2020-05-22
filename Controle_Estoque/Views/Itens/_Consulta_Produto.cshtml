@@ -24,4 +24,103 @@
     </div>
 </div>
 
+<div id="modalRemoverProduto" class="modal fade" style="width:83%" data-backdrop="static" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content modal-remove">
+            <div class="modal-header">
+                <h2 class="modal-title">Remover Produto</h2>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <span class="col-md-12">
+                    Tem certeza que deseja remover o produto selecionado?
+                </span>
+            </div>
+            <div class="modal-footer">
+                <span class="col-md-8 custom-right">
+                    <button type="button" class="btn btn-danger confirmarRemoverProduto" data-dismiss="modal">Remover</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalDetalhesProduto" class="modal fade" data-backdrop="static" role="dialog">
+    <div class="modal-dialog modal-grande">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title nomeDetalhes">Informações do Produto</h2>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Código</label>
+                            <input class="form-control codigoDetalhes" type="text" disabled/>
+                            <br />
+                        </div>
+                        <div class="col-md-8">
+                            <label>Descrição</label>
+                            <input class="form-control descricaoDetalhes" type="text" disabled/>
+                            <br />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>Quantidade</label>
+                            <input class="form-control quantidadeDetalhes" type="text" disabled/>
+                            <br />
+                        </div>
+                        <div class="col-md-4">
+                            <label>Preço Venda (unidade)</label>
+                            <input class="form-control precoVendaDetalhes" type="text" disabled/>
+                        </div>
+                        <div class="col-md-4">
+                            <label>Valor em Estoque</label>
+                            <input class="form-control valorEstoqueDetalhes" type="text" disabled/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label>Observações</label>
+                            <textarea style="height:60px;" class="form-control observacaoDetalhes" disabled></textarea>
+                            <br />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="col-md-12">
+                        <label>Foto Anexada</label>
+                        <img style="height:350px;" class="form-control fotoDetalhes" />
+                    </div>
+                </div>
+
+                <div class="col-md-12">
+                    <div class="tab-content" style="margin-top:20px">
+                        <div class="tab-pane active" role="tabpanel">
+                            <table class="table table-striped" id="">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="custom-center"><strong>Venda Id</strong></th>
+                                        <th scope="col" class="custom-center"><strong>Preço Venda</strong></th>
+                                        <th scope="col" class="custom-center"><strong>Vendedor</strong></th>
+                                        <th scope="col" class="custom-center"><strong>Data Venda</strong></th>
+                                    </tr>
+                                </thead>
+                                <tbody class="cols-wl-center">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+               
+            </div>
+        </div>
+    </div>
+</div>
+
 <input id="urlBuscarProdutos" type="hidden" value="@Url.Action("BuscarTodosProdutos", "Itens")" />
+<input id="urlRemoverProduto" type="hidden" value="@Url.Action("RemoverProduto", "Itens")" />

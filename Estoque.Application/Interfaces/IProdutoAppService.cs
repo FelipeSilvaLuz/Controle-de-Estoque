@@ -6,8 +6,12 @@ namespace Estoque.Application.Interfaces
 {
     public interface IProdutoAppService
     {
-        bool SalvarProduto(ProdutoViewModel view, ref List<string> mensagens);
         List<ProdutoViewModel> BuscarProdutos();
+
         string ImageToBase64(IFormFile file);
+
+        bool RemoverProduto(string codigo);
+
+        bool SalvarProduto(ProdutoViewModel view, ref List<string> mensagens);
     }
 }

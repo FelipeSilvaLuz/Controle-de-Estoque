@@ -1,5 +1,6 @@
 ﻿let listaProdutos = [];
 let tabelaProdutos = {};
+var $row = {};
 
 function apiBuscarProdutos() {
     var urlBuscarProdutos = $('#urlBuscarProdutos').val();
@@ -36,6 +37,17 @@ function apiImageToBase64(formData) {
     });
 }
 
+function apiRemoverProduto(codigo) {
+    var urlRemoverProduto = $('#urlRemoverProduto').val();
+    return $.ajax({
+        url: urlRemoverProduto + "?codigo=" + codigo,
+        data: {},
+        processData: false,
+        contentType: false,
+        type: "POST"
+    });
+}
+
 function apiSalvarProduto(formData) {
     var urlSalvarProduto = $('#urlSalvarProduto').val();
     return $.ajax({
@@ -55,7 +67,7 @@ function aplicandoMascaras() {
 
 function BuscarPorCodigo() {
 
-    let codigo = $('.codigoProduto').val();
+    let codigo = $('.codigoProdutoCadastro').val();
 
     apiBuscarPorCodigo(codigo).done(function (retorno) {
         if (retorno.sucesso) {
@@ -73,6 +85,7 @@ function BuscarPorCodigo() {
             $('.salvarProduto').text('Alterar Cadastro');
         }
         else {
+            $('.nomeProduto').val('');
             $('.nomeProduto').val('');
             $('.descricaoProduto').val('');
             $('.precoCustoProduto').val('');
@@ -148,17 +161,19 @@ function configuracaoDasColunasDeProdutos() {
 function configuracaoDasColunasProdutosRenderBotoes(data, type, row) {
     var retorno = '';
 
-    retorno += ' <button type="button" class="btn btn-primary btn-xs" data-numero="' + row.codigo
-        + '" title="Visualizar"><span class="glyphicon glyphicon-search"></span></button>';
+    retorno += ' <button type="button" class="btn btn-primary btn-xs detalhesProduto" data-codigo="' + row.codigo + '" title="Detalhes Produto"' +
+        ' data-toggle="modal" data-target="#modalDetalhesProduto"><span class="glyphicon glyphicon-search"></span>' +
+        '</button >';
 
-    retorno += ' <button type="button" class="btn btn-primary btn-xs" data-numero="' + row.codigo
-        + '" title="Download"><span class="glyphicon glyphicon-cloud-download"></span></button>';
+    retorno += ' <button type="button" class="btn btn-danger btn-xs removerProduto" data-codigo="' + row.codigo + '" title="Remover Produto"' +
+        ' data-toggle="modal" data-target="#modalRemoverProduto"><span class="glyphicon glyphicon-remove"></span>' +
+        '</button >';
 
     return retorno;
 }
 
 function LimparCamposCadastro() {
-    $('.codigoProduto').val('');
+    $('.codigoProdutoCadastro').val('');
     $('.nomeProduto').val('');
     $('.descricaoProduto').val('');
     $('.precoCustoProduto').val('');
@@ -204,7 +219,7 @@ function SalvarProduto_OnClick() {
 
     var formData = new FormData();
     formData.append("files", files);
-    formData.append("codigo", $('.codigoProduto').val());
+    formData.append("codigo", $('.codigoProdutoCadastro').val());
     formData.append("nome", $('.nomeProduto').val());
     formData.append("descricao", $('.descricaoProduto').val());
     formData.append("precoCusto", $('.precoCustoProduto').val());
@@ -229,17 +244,72 @@ function SalvarProduto_OnClick() {
     }).fail(function () { bloqueioDeTela(false); }).always(function () { bloqueioDeTela(false); });
 }
 
+function removerProduto() {
+    $row = $(this).closest('tr');
+    $('.confirmarRemoverProduto').val($(this).data('codigo'));
+}
+
+function confirnmarRemoverProduto_OnClick() {
+    bloqueioDeTela(true);
+    let codigo = $('.confirmarRemoverProduto').val();
+
+    apiRemoverProduto(codigo).done(function (retorno) {
+        if (retorno.sucesso) {
+            tabelaProdutos.row($row).remove().draw();
+            abrirDialogSucessoMensagem(retorno.mensagens);
+        }
+        else {
+            if (retorno.tipo === 'erro') {
+                abrirDialogErroMensagem(retorno.mensagens);
+            }
+            else {
+                abrirDialogAlertaListaMensagem(retorno.mensagens);
+            }
+        }
+    }).fail(function () { bloqueioDeTela(false); }).always(function () { bloqueioDeTela(false); });
+}
+
+function BuscarDetalhesProduto() {
+    bloqueioDeTela(true);
+    let codigo = $(this).data('codigo');
+
+    apiBuscarPorCodigo(codigo).done(function (retorno) {
+        if (retorno.sucesso) {
+            $('.nomeDetalhes').text('Informações do ' + retorno.dados.nome);
+            $('.codigoDetalhes').val(retorno.dados.codigo);
+            $('.descricaoDetalhes').val(retorno.dados.descricao);
+            $('.quantidadeDetalhes').val(retorno.dados.quantidadeExibir);
+            $('.precoVendaDetalhes').val(retorno.dados.precoVendaExibir);
+            $('.valorEstoqueDetalhes').val(retorno.dados.valorEstoqueExibir);
+            $('.observacaoDetalhes').val(retorno.dados.observacao);
+            $('.fotoDetalhes').attr('src', 'data:image/jpeg;base64, ' + retorno.dados.base64);
+        }
+        else {
+            if (retorno.tipo === 'erro') {
+                abrirDialogErroMensagem(retorno.mensagens);
+            }
+            else {
+                abrirDialogAlertaListaMensagem(retorno.mensagens);
+            }
+        }
+    }).fail(function () { bloqueioDeTela(false); }).always(function () { bloqueioDeTela(false); });
+}
+
 function documentoLoginReady() {
 
     tabelaProdutos = configuracaoDasColunasDeProdutos();
 
     $("body").delegate(".salvarProduto", "click", SalvarProduto_OnClick);
     $("body").delegate(".btnConsultaProduto", "click", BuscarProdutos);
-    $("body").delegate(".codigoProduto", "change", BuscarPorCodigo);
+    $("body").delegate(".codigoProdutoCadastro", "change", BuscarPorCodigo);
     $("body").delegate(".anexarFoto", "change", PreviewFotoAnexada_OnChange);
+    $("body").delegate(".removerProduto", "click", removerProduto);
+    $("body").delegate(".confirmarRemoverProduto", "click", confirnmarRemoverProduto_OnClick);
+    $("body").delegate(".detalhesProduto", "click", BuscarDetalhesProduto);
 
     BuscarProdutos();
     aplicandoMascaras();
 }
+
 
 $(document).ready(documentoLoginReady);
