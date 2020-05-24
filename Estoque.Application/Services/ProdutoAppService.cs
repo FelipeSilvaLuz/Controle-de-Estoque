@@ -4,6 +4,7 @@ using Estoque.Domain.Entities;
 using Estoque.Domain.Interfaces.Repositories;
 using Estoque.Util.Models;
 using Microsoft.AspNetCore.Http;
+using OfficeOpenXml;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -48,6 +49,39 @@ namespace Estoque.Application.Services
                 produtos.Add(produto);
             }
             return produtos;
+        }
+
+        public ArquivoView DownloadDadosVenda(string codigo)
+        {
+            var paginaExcel = new ExcelPackage();
+            var conteudo = paginaExcel.Workbook.Worksheets.Add("Dados Produto");
+
+            ConteudoExcelDadosVenda(conteudo, codigo);
+
+            ArquivoView arquivo = new ArquivoView
+            {
+                Arquivo = paginaExcel.GetAsByteArray(),
+                NomeArquivo = "Código(" + codigo + ").xlsx",
+                ContentType = "application/xlsx"
+            };
+
+            return arquivo;
+        }
+
+        public void ConteudoExcelDadosVenda(ExcelWorksheet conteudo, string codigo)
+        {
+            var produto = _produtosRepository.Get(x => x.Codigo == codigo).FirstOrDefault();
+
+            conteudo.Cells[2, 2].Style.Font.Bold = true;
+            conteudo.Cells[2, 2].Style.Font.Size = 15;
+            conteudo.Cells[2, 2].Value = "Dados de venda do produto: " + produto.Nome;
+
+            conteudo.Cells[8, 2].Value = "Venda Id";
+            conteudo.Cells[8, 3].Value = "Preço Venda";
+            conteudo.Cells[8, 4].Value = "Vendador";
+            conteudo.Cells[8, 5].Value = "Data Venda";
+            conteudo.Cells[8, 2, 8, 5].Style.Font.Bold = true;
+
         }
 
         public string ImageToBase64(IFormFile file)

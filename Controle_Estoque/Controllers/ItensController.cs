@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Logging;
+using SixLabors.ImageSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,21 +97,52 @@ namespace Estoque.MvcCore.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("Produtos/DownloadDadosProduto/{codigo}")]
+        public IActionResult DownloadDadosProduto(string codigo)
+        {
+            try
+            {
+                var arquivo = _produtoAppService.DownloadDadosVenda(codigo);
+
+                return new FileContentResult(arquivo?.Arquivo, arquivo?.ContentType)
+                {
+                    FileDownloadName = arquivo?.NomeArquivo
+                };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao tentar criar arquivo de download do produto");
+                return null;
+            }
+        }
+
         [HttpPost]
         public IActionResult ImageToBase64(IFormFile files)
         {
             try
             {
                 bool sucesso = true;
+                int imageWidth = 0;
+                int imageHeight = 0;
+
                 List<string> mensagens = new List<string>();
 
                 var imageBase64 = _produtoAppService.ImageToBase64(files);
+
+                if (imageBase64 != null)
+                {
+                    var image = Image.Load(files.OpenReadStream());
+
+                    imageWidth = image.Width;
+                    imageHeight = image.Height;
+                }
 
                 return Json(new
                 {
                     sucesso = sucesso,
                     mensagens = mensagens,
-                    dados = imageBase64,
+                    dados = "data:image/jpeg;base64," + imageBase64,
                     tipo = true ? "sucesso" : "alerta"
                 });
             }

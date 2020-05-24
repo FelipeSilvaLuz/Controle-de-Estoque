@@ -161,6 +161,10 @@ function configuracaoDasColunasDeProdutos() {
 function configuracaoDasColunasProdutosRenderBotoes(data, type, row) {
     var retorno = '';
 
+    retorno += ' <button type="button" class="btn btn-light btn-xs downloadDadosVendas" data-codigo="' + row.codigo + '" title="Dados de Vendas">' +
+        '<span class="glyphicon glyphicon-download-alt"></span>' +
+        '</button >';
+
     retorno += ' <button type="button" class="btn btn-primary btn-xs detalhesProduto" data-codigo="' + row.codigo + '" title="Detalhes Produto"' +
         ' data-toggle="modal" data-target="#modalDetalhesProduto"><span class="glyphicon glyphicon-search"></span>' +
         '</button >';
@@ -195,7 +199,7 @@ function PreviewFotoAnexada_OnChange() {
         if (retorno.sucesso) {
 
             $('.previewImage').removeAttr('src');
-            $('.previewImage').attr('src', 'data:image/jpeg;base64, ' + retorno.dados);
+            $('.previewImage').attr('src', retorno.dados);
 
         }
         else {
@@ -295,6 +299,11 @@ function BuscarDetalhesProduto() {
     }).fail(function () { bloqueioDeTela(false); }).always(function () { bloqueioDeTela(false); });
 }
 
+function DownloadDadosVenda_OnClick() {
+    let urlDestino = $('#urlDownloadDadosProduto').val();
+    window.location.replace(urlDestino + $(this).data('codigo'));
+}
+
 function documentoLoginReady() {
 
     tabelaProdutos = configuracaoDasColunasDeProdutos();
@@ -306,6 +315,7 @@ function documentoLoginReady() {
     $("body").delegate(".removerProduto", "click", removerProduto);
     $("body").delegate(".confirmarRemoverProduto", "click", confirnmarRemoverProduto_OnClick);
     $("body").delegate(".detalhesProduto", "click", BuscarDetalhesProduto);
+    $("body").delegate(".downloadDadosVendas", "click", DownloadDadosVenda_OnClick); 
 
     BuscarProdutos();
     aplicandoMascaras();

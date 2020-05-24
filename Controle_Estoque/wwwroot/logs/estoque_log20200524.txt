@@ -1,0 +1,8 @@
+2020-05-24 03:16:22.849 -03:00 [INF] Iniciando o sistema de estoque
+2020-05-24 03:25:20.179 -03:00 [INF] Iniciando o sistema de estoque
+2020-05-24 03:26:57.565 -03:00 [INF] Iniciando o sistema de estoque
+2020-05-24 03:29:52.263 -03:00 [INF] Iniciando o sistema de estoque
+2020-05-24 16:08:01.649 -03:00 [INF] Iniciando o sistema de estoque
+2020-05-24 16:12:03.549 -03:00 [INF] Iniciando o sistema de estoque
+2020-05-24 16:21:51.740 -03:00 [INF] Iniciando o sistema de estoque
+2020-05-24 16:23:24.420 -03:00 [INF] Iniciando o sistema de estoque

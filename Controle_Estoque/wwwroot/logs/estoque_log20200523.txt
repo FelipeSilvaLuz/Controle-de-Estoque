@@ -1,0 +1,2 @@
+2020-05-23 02:34:54.734 -03:00 [INF] Iniciando o sistema de estoque
+2020-05-23 13:32:15.418 -03:00 [INF] Iniciando o sistema de estoque

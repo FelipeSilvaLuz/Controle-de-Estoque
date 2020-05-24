@@ -8,6 +8,8 @@ namespace Estoque.Application.Interfaces
     {
         List<ProdutoViewModel> BuscarProdutos();
 
+        ArquivoView DownloadDadosVenda(string codigo);
+
         string ImageToBase64(IFormFile file);
 
         bool RemoverProduto(string codigo);
