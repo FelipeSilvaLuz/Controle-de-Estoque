@@ -15,17 +15,20 @@ namespace Estoque.MvcCore.Controllers
     {
         private readonly ILogger<ItensController> _logger;
         private readonly IProdutoAppService _produtoAppService;
+        private readonly IRegistroVendasAppService _registroVendasAppService;
 
         public ItensController(
             ILogger<ItensController> logger,
-            IProdutoAppService produtoAppService)
+            IProdutoAppService produtoAppService,
+            IRegistroVendasAppService registroVendasAppService)
         {
             _logger = logger;
             _produtoAppService = produtoAppService;
+            _registroVendasAppService = registroVendasAppService;
         }
 
         [HttpGet]
-        public IActionResult BuscarProdutoPorCodigo(string codigoProduto)
+        public IActionResult BuscarProdutoPorCodigo(string codigoProduto, bool telaDetalhes)
         {
             try
             {
@@ -46,6 +49,10 @@ namespace Estoque.MvcCore.Controllers
                 }
                 else
                 {
+                    if (telaDetalhes)
+                        produtoPorCodigo.DetalhesProduto = _registroVendasAppService
+                            .BuscarRegistrosDeVendas(codigoProduto).ToList();
+
                     return Json(new
                     {
                         sucesso = sucesso,

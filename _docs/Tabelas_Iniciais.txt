@@ -31,3 +31,16 @@ CREATE TABLE Produtos (
         ,	AlteradoEm		DateTime
         ,	AlteradoPor		VARCHAR(80)
         );
+
+
+create table RegistroVendas(
+			VendaId			INT AUTO_INCREMENT PRIMARY KEY
+		,	Codigo			VARCHAR(50)
+        ,	Vendedor		VARCHAR(80)
+        ,	PrecoVenda		double
+        ,	CriadoEm		DateTime
+        ,	CriadoPor		VARCHAR(80)
+        ,	AlteradoEm		DateTime
+        ,	AlteradoPor		VARCHAR(80)
+);
+

@@ -1,5 +1,7 @@
 ﻿let listaProdutos = [];
+let listaDetalhesVenda = [];
 let tabelaProdutos = {};
+let tabelaDetalhesVenda = {};
 var $row = {};
 
 function apiBuscarProdutos() {
@@ -14,11 +16,11 @@ function apiBuscarProdutos() {
     });
 }
 
-function apiBuscarPorCodigo(codigo) {
+function apiBuscarPorCodigo(codigo, ehDetalhes) {
     var urlBuscarPorCodigo = $('#urlBuscarPorCodigo').val();
     return $.ajax({
         type: "GET",
-        url: urlBuscarPorCodigo + "?codigoProduto=" + codigo,
+        url: urlBuscarPorCodigo + "?codigoProduto=" + codigo + '&telaDetalhes=' + ehDetalhes,
         data: {},
         contentType: "application/json; charset=utf-8",
         processData: true,
@@ -68,8 +70,9 @@ function aplicandoMascaras() {
 function BuscarPorCodigo() {
 
     let codigo = $('.codigoProdutoCadastro').val();
+    let ehDetalhes = false;
 
-    apiBuscarPorCodigo(codigo).done(function (retorno) {
+    apiBuscarPorCodigo(codigo, ehDetalhes).done(function (retorno) {
         if (retorno.sucesso) {
             $('.nomeProduto').val(retorno.dados.nome);
             $('.descricaoProduto').val(retorno.dados.descricao);
@@ -131,6 +134,32 @@ function configuracaoTabelaProdutos() {
     });
 
     return conf;
+}
+function configuracaoTabelaDetalhesVenda() {
+    let conf = $('#tbDetalhesVendas').DataTable({
+        "language": dataTableLanguage(),
+        "aaData": listaDetalhesVenda,
+        "columns": configuracaoDasColunasDetalhesVendas()
+    });
+
+    return conf;
+}
+
+function configuracaoDasColunasDetalhesVendas() {
+    return [
+        {
+            "data": "vendaId",
+            className: "custom-center col-detalhes-vendaId"
+        }, {
+            "data": "precoVendaExibir",
+            className: "custom-right col-detalhes-precoVenda"
+        }, {
+            "data": "vendedor",
+            className: "custom-left col-detalhes-vendedor"
+        }, {
+            "data": "criadoEmExibir",
+            className: "custom-left col-detalhes-dataVenda"
+        }];
 }
 
 function configuracaoDasColunasDeProdutos() {
@@ -276,9 +305,19 @@ function confirnmarRemoverProduto_OnClick() {
 function BuscarDetalhesProduto() {
     bloqueioDeTela(true);
     let codigo = $(this).data('codigo');
+    let ehDetalhes = true;
 
-    apiBuscarPorCodigo(codigo).done(function (retorno) {
+    apiBuscarPorCodigo(codigo, ehDetalhes).done(function (retorno) {
         if (retorno.sucesso) {
+
+            listaDetalhesVenda = retorno.dados.detalhesProduto;
+
+            var tabelaDetalhes = $('#tbDetalhesVendas').DataTable();
+            tabelaDetalhes.destroy();
+
+            tabelaDetalhesVenda = configuracaoTabelaDetalhesVenda();
+
+
             $('.nomeDetalhes').text('Informações do ' + retorno.dados.nome);
             $('.codigoDetalhes').val(retorno.dados.codigo);
             $('.descricaoDetalhes').val(retorno.dados.descricao);
@@ -307,6 +346,7 @@ function DownloadDadosVenda_OnClick() {
 function documentoLoginReady() {
 
     tabelaProdutos = configuracaoDasColunasDeProdutos();
+    tabelaDetalhesVenda = configuracaoDasColunasDetalhesVendas();
 
     $("body").delegate(".salvarProduto", "click", SalvarProduto_OnClick);
     $("body").delegate(".btnConsultaProduto", "click", BuscarProdutos);

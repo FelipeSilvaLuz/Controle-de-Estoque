@@ -24,6 +24,7 @@ namespace Estoque.EFData.Contexts
 
             modelBuilder.ApplyConfiguration(new AutenticacaoUsuariosMap());
             modelBuilder.ApplyConfiguration(new ProdutosMap());
+            modelBuilder.ApplyConfiguration(new RegistroVendaMap());
 
         }
     }
