@@ -139,10 +139,9 @@ body {
     border: 2px solid #000;
     color: #fff;
     background-color: rgba(0,0,5,0.8);
-    top: 50%;
     left: 50%;
     position: absolute;
-    transform: translate(-50%, 10%);
+    transform: translate(-50%, 25%);
     box-sizing: border-box;
     padding: 20px 28px;
 }
@@ -199,6 +198,19 @@ h1 {
     text-transform: uppercase;
     text-align: center;
     font-size: 25px;
+}
+
+.nome-visivel {
+    font-size: 25px;
+    font-family: Calibri;
+    text-align:center;
+}
+
+.cargo-visivel {
+    font-size: 18px;
+    font-family: Calibri;
+    text-align: center;
+    font-style:italic;
 }
 
 .login p {
