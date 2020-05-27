@@ -5,6 +5,7 @@ using Estoque.Domain.Interfaces.Repositories;
 using Estoque.Util.Models;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,12 +17,15 @@ namespace Estoque.Application.Services
     {
         private readonly IMapper _mapper;
         private readonly IProdutosRepository _produtosRepository;
+        private readonly IRegistroVendasRepository _registroVendasRepository;
 
         public ProdutoAppService(
             IProdutosRepository produtosRepository,
+            IRegistroVendasRepository registroVendasRepository,
             IMapper mapper)
         {
             _produtosRepository = produtosRepository;
+            _registroVendasRepository = registroVendasRepository;
             _mapper = mapper;
         }
 
@@ -55,6 +59,7 @@ namespace Estoque.Application.Services
         {
             var paginaExcel = new ExcelPackage();
             var conteudo = paginaExcel.Workbook.Worksheets.Add("Dados Produto");
+            conteudo.DefaultColWidth = 18;
 
             ConteudoExcelDadosVenda(conteudo, codigo);
 
@@ -72,16 +77,35 @@ namespace Estoque.Application.Services
         {
             var produto = _produtosRepository.Get(x => x.Codigo == codigo).FirstOrDefault();
 
+            var registroVendas = _registroVendasRepository.Get(x => x.Codigo == codigo).ToList();
+
             conteudo.Cells[2, 2].Style.Font.Bold = true;
             conteudo.Cells[2, 2].Style.Font.Size = 15;
-            conteudo.Cells[2, 2].Value = "Dados de venda do produto: " + produto.Nome;
+            conteudo.Cells[2, 2].Value = "Dados de venda do produto: " + produto?.Nome;
+            conteudo.Cells[5, 2].Value = "Descrição: " + produto?.Descricao;
 
-            conteudo.Cells[8, 2].Value = "Venda Id";
-            conteudo.Cells[8, 3].Value = "Preço Venda";
-            conteudo.Cells[8, 4].Value = "Vendador";
-            conteudo.Cells[8, 5].Value = "Data Venda";
-            conteudo.Cells[8, 2, 8, 5].Style.Font.Bold = true;
+            conteudo.Cells[12, 2].Value = "Venda Id";
+            conteudo.Cells[12, 3].Value = "Preço Venda";
+            conteudo.Cells[12, 4].Value = "Vendador";
+            conteudo.Cells[12, 5].Value = "Data Venda";
+            conteudo.Cells[12, 2, 12, 5].Style.Font.Bold = true;
 
+            int contador = 13;
+
+            foreach (var item in registroVendas)
+            {
+                conteudo.Cells[contador, 2].Value = item?.VendaId;
+                conteudo.Cells[contador, 3].Value = item?.PrecoVenda;
+                conteudo.Cells[contador, 4].Value = item?.Vendedor;
+                conteudo.Cells[contador, 5].Value = item?.CriadoEm.Value.ToString("dd/MM/yyyy hh:mm:ss");
+
+                contador++;
+            }
+            contador--;
+            conteudo.Cells[12, 2, contador, 5].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+            conteudo.Cells[12, 2, contador, 5].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+            conteudo.Cells[12, 2, contador, 5].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+            conteudo.Cells[12, 2, contador, 5].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
         }
 
         public string ImageToBase64(IFormFile file)
