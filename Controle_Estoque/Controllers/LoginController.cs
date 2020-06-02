@@ -4,6 +4,7 @@ using Estoque.Domain.Entities;
 using Estoque.Util;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -34,14 +35,6 @@ namespace Estoque.MvcCore.Controllers
             return View();
         }
 
-        public ClaimsPrincipal CriarClaimsPrincipal(AutenticacaoUsuarios usuarioSistema)
-        {
-            List<Claim> claims = ListarClaims(usuarioSistema);
-            ClaimsIdentity identities = new ClaimsIdentity(claims, DefaultAuthenticationTypes.ApplicationCookie);
-
-            return new ClaimsPrincipal(new[] { identities });
-        }
-
         [HttpPost]
         public IActionResult ValidarAcesso([FromBody] AutenticarUsuarioViewModel dados)
         {
@@ -65,9 +58,7 @@ namespace Estoque.MvcCore.Controllers
                 }
                 else
                 {
-                    Response.Cookies.Append("contador", validar.UsuarioId.ToString());
-                    ClaimsPrincipal principal = CriarClaimsPrincipal(validar);
-                    HttpContext.SignInAsync(principal);
+                    CriarSessoes(validar);
 
                     return Json(new
                     {
@@ -89,12 +80,13 @@ namespace Estoque.MvcCore.Controllers
             }
         }
 
-        private List<Claim> ListarClaims(AutenticacaoUsuarios usuarioSistema)
+        private void CriarSessoes(AutenticacaoUsuarios usuario)
         {
-            List<Claim> claims = new List<Claim>();
-            claims.Add(new Claim(ClaimTypes.UserData, JsonConvert.SerializeObject(usuarioSistema)));
-
-            return claims;
+            HttpContext.Session.Set("Id", new byte[] { Convert.ToByte(usuario.UsuarioId) });
+            HttpContext.Session.SetString("Email", usuario.Email);
+            HttpContext.Session.SetString("CPF", usuario.CPF);
+            HttpContext.Session.SetString("Ramal", usuario.Ramal);
+            HttpContext.Session.SetString("Nome", usuario.Nome);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿@{
     bool verLayout = ViewBag.verBotoes ?? false;
+    string nomeUsuario = ViewBag.NomeUsuario ?? string.Empty;
 }
 <!DOCTYPE html>
 <html>
@@ -26,100 +27,100 @@
     <div class="container body-content col-md-12">
         @if (verLayout)
         {
-        <div class="navbar-header row col-md-12 painel_central_superior">
-            <div class="titulo_layout col-md-11"> Sistema de Controle de Estoque </div>
+            <div class="navbar-header row col-md-12 painel_central_superior">
+                <div class="titulo_layout col-md-11"> Sistema de Controle de Estoque </div>
 
-            <a asp-route-logout="true" asp-controller="Login" asp-action="Autenticar" style="float:right; margin-right:20px; margin-top:10px;">LogOut</a>
-            <div class="glyphicon glyphicon-cog" style="float:right;color:black; margin-top:12px;"></div>
-        </div>
+                <a asp-route-logout="true" asp-controller="Login" asp-action="Autenticar" style="float:right; margin-right:20px; margin-top:10px;">LogOut</a>
+                <div class="glyphicon glyphicon-cog" style="float:right;color:black; margin-top:12px;"></div>
+            </div>
 
-        <div class="col-md-12" id="tabsTop">
-            <div class="board">
-                <div class="board-inner">
-                    <div class="painel_lateral">
-                        <img src="~/images/usuario.png" width="83" height="80" style="transform: translate(40%, -30%)" />
+            <div class="col-md-12" id="tabsTop">
+                <div class="board">
+                    <div class="board-inner">
+                        <div class="painel_lateral">
+                            <img src="~/images/usuario.png" width="83" height="80" style="transform: translate(40%, -30%)" />
 
-                        <h4 class="nome-visivel">Felipe Luz</h4>
-                        <h4 class="cargo-visivel">Administrador</h4>
+                            <h4 class="nome-visivel">@nomeUsuario</h4>
+                            <h4 class="cargo-visivel">Administrador</h4>
 
-                        <div style="margin-top:30px;"></div>
+                            <div style="margin-top:30px;"></div>
 
-                        <ul class="nav nav-tabs">
-                            <li class="active">
-                                <a href="#tabsTop-1" data-toggle="tab" class="btn btn-dark">
-                                    <span class="round-tabs one"> Produtos </span>
-                                </a>
-                            </li>
-                            <div style="margin-top:20px;"></div>
-                            <li>
-                                <a href="#tabsTop-2" data-toggle="tab" class="btn btn-dark">
-                                    <span class="round-tabs two"> Serviços </span>
-                                </a>
-                            </li>
-                            <div style="margin-top:20px;"></div>
-                            <li>
-                                <a href="#tabsTop-3" data-toggle="tab" class="btn btn-dark">
-                                    <span class="round-tabs three"> Estoque </span>
-                                </a>
-                            </li>
-                            <div style="margin-top:20px;"></div>
-                            <li>
-                                <a href="#tabsTop-4" data-toggle="tab" class="btn btn-dark">
-                                    <span class="round-tabs four"> Logistica </span>
-                                </a>
-                            </li>
-                            <div style="margin-top:20px;"></div>
-                            <li>
-                                <a href="#tabsTop-5" data-toggle="tab" class="btn btn-dark">
-                                    <span class="round-tabs five"> Vendas </span>
-                                </a>
-                            </li>
-                            <div style="margin-top:20px;"></div>
-                            <li>
-                                <a href="#tabsTop-6" data-toggle="tab" class="btn btn-dark">
-                                    <span class="round-tabs six"> Relatorios </span>
-                                </a>
-                            </li>
-                            <div style="margin-top:20px;"></div>
-                            <li>
-                                <a href="#tabsTop-7" data-toggle="tab" class="btn btn-dark">
-                                    <span class="round-tabs six"> Estatisticas </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="tabsTop-1">
-                            @Html.Partial("Produtos")
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a href="#tabsTop-1" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs one"> Produtos </span>
+                                    </a>
+                                </li>
+                                <div style="margin-top:20px;"></div>
+                                <li>
+                                    <a href="#tabsTop-2" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs two"> Serviços </span>
+                                    </a>
+                                </li>
+                                <div style="margin-top:20px;"></div>
+                                <li>
+                                    <a href="#tabsTop-3" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs three"> Estoque </span>
+                                    </a>
+                                </li>
+                                <div style="margin-top:20px;"></div>
+                                <li>
+                                    <a href="#tabsTop-4" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs four"> Logistica </span>
+                                    </a>
+                                </li>
+                                <div style="margin-top:20px;"></div>
+                                <li>
+                                    <a href="#tabsTop-5" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs five"> Vendas </span>
+                                    </a>
+                                </li>
+                                <div style="margin-top:20px;"></div>
+                                <li>
+                                    <a href="#tabsTop-6" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs six"> Relatorios </span>
+                                    </a>
+                                </li>
+                                <div style="margin-top:20px;"></div>
+                                <li>
+                                    <a href="#tabsTop-7" data-toggle="tab" class="btn btn-dark">
+                                        <span class="round-tabs six"> Estatisticas </span>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabsTop-1">
+                                @Html.Partial("Produtos")
+                            </div>
 
-                        <div class="tab-pane" id="tabsTop-2">
-                            @Html.Partial("Servicos")
-                        </div>
+                            <div class="tab-pane" id="tabsTop-2">
+                                @Html.Partial("Servicos")
+                            </div>
 
-                        <div class="tab-pane" id="tabsTop-3">
-                            @Html.Partial("Estoque")
-                        </div>
+                            <div class="tab-pane" id="tabsTop-3">
+                                @Html.Partial("Estoque")
+                            </div>
 
-                        <div class="tab-pane" id="tabsTop-4">
-                            @Html.Partial("Logistica")
-                        </div>
+                            <div class="tab-pane" id="tabsTop-4">
+                                @Html.Partial("Logistica")
+                            </div>
 
-                        <div class="tab-pane" id="tabsTop-5">
-                            @Html.Partial("Vendas")
-                        </div>
+                            <div class="tab-pane" id="tabsTop-5">
+                                @Html.Partial("Vendas")
+                            </div>
 
-                        <div class="tab-pane" id="tabsTop-6">
-                            @Html.Partial("Relatorios")
-                        </div>
+                            <div class="tab-pane" id="tabsTop-6">
+                                @Html.Partial("Relatorios")
+                            </div>
 
-                        <div class="tab-pane" id="tabsTop-7">
-                            @Html.Partial("Estatisticas")
+                            <div class="tab-pane" id="tabsTop-7">
+                                @Html.Partial("Estatisticas")
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         }
         @RenderBody()
     </div>

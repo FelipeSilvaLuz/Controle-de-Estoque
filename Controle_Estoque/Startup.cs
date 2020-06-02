@@ -43,6 +43,11 @@ namespace Controle_Estoque
 
             services.AddAutoMapperSetup();
 
+            // Configure Session
+            services.AddMemoryCache();
+            services.AddSession();
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -57,8 +62,6 @@ namespace Controle_Estoque
                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             });
-
-            services.AddMemoryCache();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -76,6 +79,7 @@ namespace Controle_Estoque
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

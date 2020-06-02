@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Security.Claims;
 using Estoque.Domain.Entities;
+using Estoque.Util.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Newtonsoft.Json;
@@ -15,86 +17,51 @@ namespace Estoque.MvcCore.Controllers
         {
             get
             {
-                var identity = User.Identity as ClaimsIdentity;
-                var userData = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData);
-                if (string.IsNullOrEmpty(userData?.Value ?? string.Empty))
-                    return string.Empty;
-
-                var usuario = JsonConvert.DeserializeObject<AutenticacaoUsuarios>(userData.Value);
-                if (usuario == null)
-                    return string.Empty;
-
-                return usuario.Nome;
+                return HttpContext.Session.GetString("Nome") ?? string.Empty;
             }
         }
         protected string EmailUsuario
         {
             get
             {
-                var identity = User.Identity as ClaimsIdentity;
-                var userData = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData);
-                if (string.IsNullOrEmpty(userData?.Value ?? string.Empty))
-                    return string.Empty;
-
-                var usuario = JsonConvert.DeserializeObject<AutenticacaoUsuarios>(userData.Value);
-                if (usuario == null)
-                    return string.Empty;
-
-                return usuario.Email;
+                return HttpContext.Session.GetString("Email") ?? string.Empty;
             }
         }
         protected string RamalUsuario
         {
             get
             {
-                var identity = User.Identity as ClaimsIdentity;
-                var userData = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData);
-                if (string.IsNullOrEmpty(userData?.Value ?? string.Empty))
-                    return string.Empty;
-
-                var usuario = JsonConvert.DeserializeObject<AutenticacaoUsuarios>(userData.Value);
-                if (usuario == null)
-                    return string.Empty;
-
-                return usuario.Ramal;
+                return HttpContext.Session.GetString("Ramal") ?? string.Empty;
             }
         }
         protected string CPFUsuario
         {
             get
             {
-                var identity = User.Identity as ClaimsIdentity;
-                var userData = identity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.UserData);
-                if (string.IsNullOrEmpty(userData?.Value ?? string.Empty))
-                    return string.Empty;
-
-                var usuario = JsonConvert.DeserializeObject<AutenticacaoUsuarios>(userData.Value);
-                if (usuario == null)
-                    return string.Empty;
-
-                return usuario.CPF;
+                return HttpContext.Session.GetString("CPF") ?? string.Empty;
             }
         }
-        protected List<string> Roles
+        protected List<SessoesModel> Roles
         {
             get
             {
-                var identity = User.Identity as ClaimsIdentity;
-                var userData = identity.Claims.Where(c => c.Type == ClaimTypes.Role);
-                var userDataa = identity.Claims;
+                List<SessoesModel> sessoes = new List<SessoesModel>();
 
-                if (userData != null)
-                    return userData.Select(x => x.Value).ToList();
+                sessoes.Add(new SessoesModel() { Nome = "Email", Value = HttpContext.Session.GetString("Email") });
+                sessoes.Add(new SessoesModel() { Nome = "Ramal", Value = HttpContext.Session.GetString("Ramal") });
+                sessoes.Add(new SessoesModel() { Nome = "CPF", Value = HttpContext.Session.GetString("CPF") });
+                sessoes.Add(new SessoesModel() { Nome = "Nome", Value = HttpContext.Session.GetString("Nome") });
 
-                return new List<string>();
+                return sessoes.ToList();
             }
         }
 
         public override void OnActionExecuted(ActionExecutedContext context)
         {
-            ViewBag.NomeUsuario = NomeUsuario;
+            var nome = NomeUsuario.Split(" ");
+            ViewBag.NomeUsuario = nome[0] + " " + nome[nome.Length - 1];
 
-            List<string> roles = Roles;
+            List<SessoesModel> roles = Roles;
 
             if (roles == null)
                 ViewBag.EstaLogado = false;
