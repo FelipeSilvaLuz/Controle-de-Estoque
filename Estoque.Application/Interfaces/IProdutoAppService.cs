@@ -14,6 +14,6 @@ namespace Estoque.Application.Interfaces
 
         bool RemoverProduto(string codigo);
 
-        bool SalvarProduto(ProdutoViewModel view, ref List<string> mensagens);
+        bool SalvarProduto(ProdutoViewModel view, string usuarioLogado, ref List<string> mensagens);
     }
 }

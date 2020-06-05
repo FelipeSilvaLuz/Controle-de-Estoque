@@ -133,7 +133,7 @@ namespace Estoque.Application.Services
             return false;
         }
 
-        public bool SalvarProduto(ProdutoViewModel view, ref List<string> mensagens)
+        public bool SalvarProduto(ProdutoViewModel view, string usuarioLogado, ref List<string> mensagens)
         {
             mensagens = ValidarCampos(view);
 
@@ -143,14 +143,14 @@ namespace Estoque.Application.Services
             var buscaProduto = _produtosRepository.Get(x => x.Codigo == view.Codigo).FirstOrDefault();
 
             if (buscaProduto == null)
-                CriarNovoProduto(view);
+                CriarNovoProduto(view, usuarioLogado);
             else
-                AlterarProduto(view, buscaProduto);
+                AlterarProduto(view, usuarioLogado, buscaProduto);
 
             return true;
         }
 
-        private bool AlterarProduto(ProdutoViewModel view, Produtos buscaProduto)
+        private bool AlterarProduto(ProdutoViewModel view, string usuarioLogado, Produtos buscaProduto)
         {
             Produtos produtos = new Produtos();
 
@@ -163,7 +163,7 @@ namespace Estoque.Application.Services
             produtos.Quantidade = view.Quantidade;
             produtos.Codigo = view.Codigo;
             produtos.AlteradoEm = DateTime.Now;
-            produtos.AlteradoPor = "usuario logado";
+            produtos.AlteradoPor = usuarioLogado;
 
             if (view.files != null)
             {
@@ -182,7 +182,7 @@ namespace Estoque.Application.Services
             return true;
         }
 
-        private bool CriarNovoProduto(ProdutoViewModel view)
+        private bool CriarNovoProduto(ProdutoViewModel view, string usuarioLogado)
         {
             Produtos produtos = new Produtos();
 
@@ -196,7 +196,7 @@ namespace Estoque.Application.Services
             produtos.FotoBase64 = ImageToBase64(view.files);
             produtos.NomeFoto = view.files.FileName.Substring(0, view.files.FileName.IndexOf('.'));
             produtos.CriadoEm = DateTime.Now;
-            produtos.CriadoPor = "usuario logado";
+            produtos.CriadoPor = usuarioLogado;
 
             _produtosRepository.Create(produtos);
             _produtosRepository.SaveChanges();

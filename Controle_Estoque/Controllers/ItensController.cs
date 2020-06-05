@@ -224,7 +224,7 @@ namespace Estoque.MvcCore.Controllers
                 bool sucesso = true;
                 List<string> mensagens = new List<string>();
 
-                sucesso = _produtoAppService.SalvarProduto(view, ref mensagens);
+                sucesso = _produtoAppService.SalvarProduto(view, NomeUsuario, ref mensagens);
 
                 if (mensagens.Any())
                 {
