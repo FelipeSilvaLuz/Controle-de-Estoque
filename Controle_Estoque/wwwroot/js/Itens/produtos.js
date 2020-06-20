@@ -117,10 +117,10 @@ function BuscarProdutos() {
         }
         else {
             if (retorno.tipo === 'erro') {
-
+                abrirDialogErroMensagem(retorno.mensagens);
             }
             else {
-
+                abrirDialogAlertaListaMensagem(retorno.mensagens);
             }
         }
     }).fail(function () { bloqueioDeTela(false); }).always(function () { bloqueioDeTela(false); });
@@ -190,7 +190,7 @@ function configuracaoDasColunasDeProdutos() {
 function configuracaoDasColunasProdutosRenderBotoes(data, type, row) {
     var retorno = '';
 
-    retorno += ' <button type="button" class="btn btn-light btn-xs downloadDadosVendas" data-codigo="' + row.codigo + '" title="Dados de Vendas">' +
+    retorno += ' <button type="button" class="btn btn-light btn-xs downloadDadosVendas" data-codigo="' + row.codigo + '" title="Download Dados de Vendas">' +
         '<span class="glyphicon glyphicon-download-alt"></span>' +
         '</button >';
 
@@ -233,10 +233,10 @@ function PreviewFotoAnexada_OnChange() {
         }
         else {
             if (retorno.tipo === 'erro') {
-
+                abrirDialogErroMensagem(retorno.mensagens);
             }
             else {
-
+                abrirDialogAlertaListaMensagem(retorno.mensagens);
             }
         }
     });
@@ -343,7 +343,7 @@ function DownloadDadosVenda_OnClick() {
     window.location.replace(urlDestino + $(this).data('codigo'));
 }
 
-function documentoLoginReady() {
+function documentoProdutosReady() {
 
     tabelaProdutos = configuracaoDasColunasDeProdutos();
     tabelaDetalhesVenda = configuracaoDasColunasDetalhesVendas();
@@ -362,4 +362,4 @@ function documentoLoginReady() {
 }
 
 
-$(document).ready(documentoLoginReady);
+$(document).ready(documentoProdutosReady);

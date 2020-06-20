@@ -120,7 +120,7 @@ namespace Estoque.MvcCore.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro ao tentar criar arquivo de download do produto");
-                return null;
+                return View();
             }
         }
 

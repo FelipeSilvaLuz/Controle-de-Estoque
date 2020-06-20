@@ -55,6 +55,27 @@ namespace Estoque.Application.Services
             return produtos;
         }
 
+        public ProdutoViewModel BuscarProdutoPorCodigo(string codigo)
+        {
+            var prod = _produtosRepository.Get(x => x.Codigo == codigo)
+                .FirstOrDefault();
+
+            if (prod == null)
+                return null;
+
+            ProdutoViewModel produto = new ProdutoViewModel
+            {
+                Codigo = prod.Codigo,
+                Descricao = prod.Descricao,
+                Nome = prod.Nome,
+                Observacao = prod.Observacao,
+                PrecoVenda = prod.PrecoVenda,
+                Quantidade = prod.Quantidade
+            };
+
+            return produto;
+        }
+
         public ArquivoView DownloadDadosVenda(string codigo)
         {
             var paginaExcel = new ExcelPackage();
