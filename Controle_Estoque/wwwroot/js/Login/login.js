@@ -44,10 +44,16 @@ function ValidarAcesso_OnClick() {
     });
 }
 
-
 function documentoLoginReady() {
 
     $("body").delegate(".btnAcessarSistema", "click", ValidarAcesso_OnClick);
+
+    // remover depois
+    $('.LoginUsuario').val('felipedasilvata24@gmail.com');
+    $('.SenhaUsuario').val('11061996');
+    $('.btnAcessarSistema').click();
+    //
+
 }
 
 $(document).ready(documentoLoginReady);

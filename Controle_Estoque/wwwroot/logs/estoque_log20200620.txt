@@ -3,3 +3,4 @@
 2020-06-20 02:34:25.519 -03:00 [INF] Iniciando o sistema de estoque
 2020-06-20 02:43:36.445 -03:00 [INF] Iniciando o sistema de estoque
 2020-06-20 02:53:37.266 -03:00 [INF] Iniciando o sistema de estoque
+2020-06-20 13:46:42.767 -03:00 [INF] Iniciando o sistema de estoque
