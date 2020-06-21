@@ -50,11 +50,22 @@
         </div>
     </div>
 
-    <div class="col-md-8">
-        <div class="col-md-12">
+    <div class="col-md-8" style="overflow: auto; height: 380px;">
+        <div class="col-md-12" >
             <label>Registro das Vendas Atuais</label>
-            <textarea style="height:336px; resize:none" class="form-control registroVendasAtuais"></textarea>
-            <br />
+            <table class="table table-sm" id="tbRegistroVenda" style="font-size:14px;">
+                <thead>
+                    <tr>
+                        <th style="width:10px;">Nº</th>
+                        <th style="width:180px;">Produto</th>
+                        <th style="width:60px;">Qtd</th>
+                        <th style="width:60px;">Valor Total</th>
+                        <th style="width:10px;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
     </div>
 
@@ -72,7 +83,7 @@
                 <span class="glyphicon glyphicon-credit-card"></span> Finalizar Venda
             </button>
 
-            <button type="button" class="btn btn-light" style="height:70px; font-size:20px; border:solid;">
+            <button type="button" class="btn btn-light venderProduto" style="height:70px; font-size:20px; border:solid;">
                 <span class="glyphicon glyphicon-shopping-cart"></span> Vender
             </button>
 

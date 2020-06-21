@@ -1,0 +1,1 @@
+2020-06-21 01:52:17.309 -03:00 [INF] Iniciando o sistema de estoque
