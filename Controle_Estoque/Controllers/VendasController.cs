@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Estoque.Application.Interfaces;
+using Estoque.Util.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -12,12 +11,15 @@ namespace Estoque.MvcCore.Controllers
     {
         private readonly ILogger<VendasController> _logger;
         private readonly IProdutoAppService _produtoAppService;
+        private readonly IRegistroVendasAppService _registroVendasAppService;
         public VendasController(
             ILogger<VendasController> logger,
-            IProdutoAppService produtoAppService)
+            IProdutoAppService produtoAppService,
+            IRegistroVendasAppService registroVendasAppService)
         {
             _logger = logger;
             _produtoAppService = produtoAppService;
+            _registroVendasAppService = registroVendasAppService;
         }
         public IActionResult Index()
         {
@@ -48,9 +50,38 @@ namespace Estoque.MvcCore.Controllers
                     observacao = prod?.Observacao
                 });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(ex, "Erro ao tentar buscar produto por codigo!");
+                return Json(new
+                {
+                    sucesso = false,
+                    tipo = "erro",
+                    mensagens = new List<string> { "Erro ao executar ação, tente novamente ou entre em contato com o administrador." }
+                });
+            }
+        }
+
+        [HttpPost]
+        public IActionResult RegistrarVenda(List<RegistrarVendaViewModel> view)
+        {
+            try
+            {
+                List<string> mensagens = new List<string>();
+                bool sucesso = true;
+
+                sucesso = _registroVendasAppService.RegistrarVenda(view, NomeUsuario, ref mensagens);
+
+                return Json(new
+                {
+                    sucesso = sucesso,
+                    tipo = sucesso ? "sucesso" : "alerta",
+                    mensagens = mensagens
+                });
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao tentar Registrar Venda!");
                 return Json(new
                 {
                     sucesso = false,

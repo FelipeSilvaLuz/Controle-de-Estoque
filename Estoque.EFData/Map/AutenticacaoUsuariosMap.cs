@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Estoque.EFData.Map
 {
-    public class AutenticacaoUsuariosMap : IEntityTypeConfiguration<AutenticacaoUsuarios>
+    public class AutenticacaoUsuariosMap : IEntityTypeConfiguration<Usuarios>
     {
-        public void Configure(EntityTypeBuilder<AutenticacaoUsuarios> builder)
+        public void Configure(EntityTypeBuilder<Usuarios> builder)
         {
             builder.ToTable("AutenticacaoUsuarios");
             

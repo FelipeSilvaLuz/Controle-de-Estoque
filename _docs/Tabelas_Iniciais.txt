@@ -17,7 +17,7 @@ CREATE TABLE AutenticacaoUsuarios (
 
 CREATE TABLE Produtos (
 		ProdutoId		INT AUTO_INCREMENT PRIMARY KEY
-        ,	Codigo			VARCHAR(50) PRIMARY KEY
+        ,	Codigo			VARCHAR(50) 
         ,	Nome			VARCHAR(80)
         ,	Descricao		VARCHAR(200)
         ,	PrecoCusto		double
@@ -31,16 +31,21 @@ CREATE TABLE Produtos (
         ,	AlteradoEm		DateTime
         ,	AlteradoPor		VARCHAR(80)
         );
+        ALTER TABLE Produtos ADD KEY (Codigo); 
 
 
-create table RegistroVendas(
-			VendaId			INT AUTO_INCREMENT PRIMARY KEY
-		,	Codigo			VARCHAR(50)
-        ,	Vendedor		VARCHAR(80)
-        ,	PrecoVenda		double
-        ,	CriadoEm		DateTime
-        ,	CriadoPor		VARCHAR(80)
-        ,	AlteradoEm		DateTime
-        ,	AlteradoPor		VARCHAR(80)
-);
+ CREATE TABLE RegistrosVenda (
+                          VendaId         int AUTO_INCREMENT PRIMARY KEY,
+                          Codigo       VARCHAR(50),
+                          NomeProduto     VARCHAR(200),
+                          Vendedor 			VARCHAR(80),
+                          PreçoUnitario      double,
+                         Quantidade      int,
+                         CriadoEm        datetime,
+                          CriadoPor       VARCHAR(80),
+                          AlteradoEm      datetime,
+                          AlteradoPor     VARCHAR(80),
+                          Status          VARCHAR(1),
+                          FOREIGN KEY(Codigo) REFERENCES Produtos(Codigo)
+                );
 

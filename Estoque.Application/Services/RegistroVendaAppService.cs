@@ -26,5 +26,13 @@ namespace Estoque.Application.Services
             return _mapper.Map<List<RegistroVendasViewModel>>(listaVendas);
 
         }
+
+        public bool RegistrarVenda(
+          List<RegistrarVendaViewModel> venda,
+          string usuarioLogado,
+          ref List<string> mensagens)
+        {
+            return true;
+        }
     }
 }

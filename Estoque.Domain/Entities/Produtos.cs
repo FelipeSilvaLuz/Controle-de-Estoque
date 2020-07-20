@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Estoque.Domain.Entities
 {
     public class Produtos : Entidade

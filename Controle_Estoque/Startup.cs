@@ -33,12 +33,13 @@ namespace Controle_Estoque
         {
             services.AddScoped<EstoqueContext>();
             services.AddScoped<IConfiguracaoEstoque, ConfiguracaoEstoque>();
-            services.AddScoped<IAutenticarUsuarioRepository, AutenticarUsuarioRepository>();
-            services.AddScoped<IAutenticacaoUsuarioAppService, AutenticacaoUsuarioAppService>();
+            services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IUsuarioAppService, UsuarioAppService>();
             services.AddScoped<IProdutoAppService, ProdutoAppService>();
             services.AddScoped<IProdutosRepository, ProdutosRepository>();
             services.AddScoped<IRegistroVendasRepository, RegistroVendasRepository>();
             services.AddScoped<IRegistroVendasAppService, RegistroVendaAppService>();
+            services.AddScoped<IRegistrarVendaRepository, RegistrarVendaRepository>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
             services.AddAutoMapperSetup();

@@ -2,7 +2,7 @@
 
 namespace Estoque.Domain.Interfaces.Repositories
 {
-    public interface IAutenticarUsuarioRepository : IGenericRepository<AutenticacaoUsuarios>
+    public interface IUsuarioRepository : IGenericRepository<Usuarios>
     {
     }
 }

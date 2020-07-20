@@ -51,7 +51,7 @@
     </div>
 
     <div class="col-md-8" style="overflow: auto; height: 380px;">
-        <div class="col-md-12" >
+        <div class="col-md-12">
             <label>Registro das Vendas Atuais</label>
             <table class="table table-sm" id="tbRegistroVenda" style="font-size:14px;">
                 <thead>
@@ -63,8 +63,7 @@
                         <th style="width:10px;">Ações</th>
                     </tr>
                 </thead>
-                <tbody>
-                </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>
@@ -79,7 +78,7 @@
 
     <div class="row col-md-12">
         <div style="float:right; margin-bottom: 50px">
-            <button type="button" class="btn btn-light" style="height:70px; font-size:20px; border:solid;">
+            <button type="button" class="btn btn-light btnFinalizarVenda" style="height:70px; font-size:20px; border:solid;">
                 <span class="glyphicon glyphicon-credit-card"></span> Finalizar Venda
             </button>
 
@@ -99,5 +98,6 @@
 </div>
 
 <input id="urlBuscarPorCodigoParaVenda" type="hidden" value="@Url.Action("BuscarProdutoPorCodigo", "Vendas")" />
+<input id="urlFinalizarVenda" type="hidden" value="@Url.Action("RegistrarVenda", "Vendas")" />
 
 <script src="~/js/Itens/vendas.js"></script>

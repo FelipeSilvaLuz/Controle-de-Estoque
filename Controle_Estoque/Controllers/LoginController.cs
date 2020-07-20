@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Estoque.Application.Interfaces;
+using Estoque.Application.Services;
 using Estoque.Domain.Entities;
 using Estoque.Util;
+using Estoque.Util.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
@@ -16,16 +18,16 @@ namespace Estoque.MvcCore.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly IAutenticacaoUsuarioAppService _autenticacaoUsuarioAppService;
+        private readonly IUsuarioAppService _usuarioAppService;
         private readonly ILogger<LoginController> _logger;
         private readonly IMapper _mapper;
 
         public LoginController(
-            IAutenticacaoUsuarioAppService autenticacaoUsuarioAppService,
+            IUsuarioAppService usuarioAppService,
             ILogger<LoginController> logger,
             IMapper mapper)
         {
-            _autenticacaoUsuarioAppService = autenticacaoUsuarioAppService;
+            _usuarioAppService = usuarioAppService;
             _logger = logger;
             _mapper = mapper;
         }
@@ -36,7 +38,7 @@ namespace Estoque.MvcCore.Controllers
         }
 
         [HttpPost]
-        public IActionResult ValidarAcesso([FromBody] AutenticarUsuarioViewModel dados)
+        public IActionResult ValidarAcesso([FromBody] UsuarioViewModel dados)
         {
             try
             {
@@ -44,7 +46,7 @@ namespace Estoque.MvcCore.Controllers
                 string mensagens = string.Empty;
                 List<string> mensagem = new List<string>();
 
-                var validar = _autenticacaoUsuarioAppService.ValidarUsuario(dados, ref mensagens);
+                var validar = _usuarioAppService.ValidarUsuario(dados, ref mensagens);
 
                 if (validar == null)
                 {
@@ -80,7 +82,7 @@ namespace Estoque.MvcCore.Controllers
             }
         }
 
-        private void CriarSessoes(AutenticacaoUsuarios usuario)
+        private void CriarSessoes(UsuarioViewModel usuario)
         {
             HttpContext.Session.Set("Id", new byte[] { Convert.ToByte(usuario.UsuarioId) });
             HttpContext.Session.SetString("Email", usuario.Email);

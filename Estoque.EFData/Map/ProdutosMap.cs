@@ -12,7 +12,7 @@ namespace Estoque.EFData.Map
             builder.HasKey(prod => new { prod.ProdutoId, prod.Codigo });
 
             builder.Property(prod => prod.ProdutoId).ValueGeneratedOnAdd().IsRequired();
-            builder.Property(prod => prod.Codigo).IsRequired();
+            builder.Property(prod => prod.Codigo).ValueGeneratedNever().IsRequired();
             builder.Property(prod => prod.Descricao);
             builder.Property(prod => prod.FotoBase64);
             builder.Property(prod => prod.NomeFoto);

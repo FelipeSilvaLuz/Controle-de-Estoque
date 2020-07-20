@@ -31,7 +31,13 @@
                 <div class="titulo_layout col-md-11"> Sistema de Controle de Estoque </div>
 
                 <a asp-route-logout="true" asp-controller="Login" asp-action="Autenticar" style="float:right; margin-right:20px; margin-top:10px;">LogOut</a>
-                <div class="glyphicon glyphicon-cog" style="float:right;color:black; margin-top:12px;"></div>
+
+                <div class='btn-group'>
+                    <a data-toggle='dropdown'><span class='glyphicon glyphicon-cog' style="margin-left:15px" title="Configurações"></span></a>
+                    <div class='dropdown-menu dropdown-menu-right'>
+                        <a asp-controller="Configuracao" asp-action="ListarUsuarios" class='dropdown-item btn btn-link'>Usuários</a>
+                    </div>
+                </div>
             </div>
 
             <div class="col-md-12" id="tabsTop">

@@ -116,8 +116,8 @@ namespace Estoque.Application.Services
             foreach (var item in registroVendas)
             {
                 conteudo.Cells[contador, 2].Value = item?.VendaId;
-                conteudo.Cells[contador, 3].Value = item?.PrecoVenda;
-                conteudo.Cells[contador, 4].Value = item?.Vendedor;
+                conteudo.Cells[contador, 3].Value = item?.PrecoUnitario;
+                conteudo.Cells[contador, 4].Value = item?.VendaId;
                 conteudo.Cells[contador, 5].Value = item?.CriadoEm.Value.ToString("dd/MM/yyyy hh:mm:ss");
 
                 contador++;

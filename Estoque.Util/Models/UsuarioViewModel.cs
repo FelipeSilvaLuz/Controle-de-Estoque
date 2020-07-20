@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Estoque.Util
+﻿namespace Estoque.Util.Models
 {
-    public class AutenticarUsuarioViewModel
+    public class UsuarioViewModel
     {
+        public long UsuarioId { get; set; }
         public string Email { get; set; }
         public string Senha { get; set; }
         public string Nome { get; set; }

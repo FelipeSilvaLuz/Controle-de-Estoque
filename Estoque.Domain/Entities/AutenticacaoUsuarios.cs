@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Estoque.Domain.Entities
 {
-    public class AutenticacaoUsuarios : Entidade
+    public class Usuarios : Entidade
     {
         public override object[] ChavePrimaria => new object[] { UsuarioId };
 

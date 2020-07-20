@@ -1,5 +1,8 @@
 ﻿let contador = 1;
 let valorUnitario = '';
+let totalGeral = 0;
+let resumoVenda = {};
+let listaResumoVenda = [];
 
 function apiBuscarporCodigoParaVenda(codigo) {
     var urlBuscarPorCodigoParaVenda = $('#urlBuscarPorCodigoParaVenda').val();
@@ -11,6 +14,22 @@ function apiBuscarporCodigoParaVenda(codigo) {
         processData: true,
         traditional: true
     });
+}
+
+function apiFinalizarVenda(dados) {
+    var urlFinalizarVenda = $('#urlFinalizarVenda').val();
+    return $.ajax({
+        type: "POST",
+        url: urlFinalizarVenda,
+        data: { json: JSON.stringify(dados) },
+        dataType: 'text',
+        contentType: "application/json; charset=utf-8",
+        traditional: true
+    });
+}
+
+function aplicandoMascaras() {
+    $('.campoQuantidadeVenda').mask("000.000", { reverse: true });
 }
 
 function btnBuscarProdutoVenda_OnChange() {
@@ -43,7 +62,7 @@ function btnCalcularValorProduto_keyup() {
     var valorUni = valorUnitario;
     var quantidade = $('.campoQuantidadeVenda').val();
 
-    if (valorUni == '' || quantidade == '')
+    if (valorUni == '' || quantidade == '' || quantidade == '0')
         return;
 
     var valorTotal = valorUni * quantidade;
@@ -53,8 +72,24 @@ function btnCalcularValorProduto_keyup() {
     $('.campoValorTotalProdutoVenda').val(texto);
 }
 
-function aplicandoMascaras() {
-    $('.campoQuantidadeVenda').mask("000.000", { reverse: true });
+function btnFinalizarVenda_OnClick() {
+    bloqueioDeTela(true);
+
+    var dados = JSON.stringify({ 'view': listaResumoVenda });
+
+    apiFinalizarVenda(dados).done(function (retorno) {
+        if (retorno.sucesso) {
+
+        }
+        else {
+            if (retorno.tipo === 'erro') {
+                abrirDialogErroMensagem(retorno.mensagens);
+            }
+            else {
+                abrirDialogAlertaListaMensagem(retorno.mensagens);
+            }
+        }
+    }).fail(function () { bloqueioDeTela(false); }).always(function () { bloqueioDeTela(false); });
 }
 
 function ValidarQuantidade() {
@@ -65,11 +100,11 @@ function ValidarQuantidade() {
 }
 
 function VenderProduto_OnClick() {
-    var valorProduto = $('.campoValorTotalProdutoVenda').val();
+    var valorTotal = $('.campoValorTotalProdutoVenda').val();
     var nomeProduto = $('.campoNomeProdutoVenda').val();
     var quantidade = $('.campoQuantidadeVenda').val();
 
-    if (valorProduto == '' || nomeProduto == '' || quantidade == '')
+    if (valorTotal == '' || nomeProduto == '' || quantidade == '')
         return;
 
     var addLinhas = $('<tr>');
@@ -78,15 +113,24 @@ function VenderProduto_OnClick() {
     cols += '<td>' + contador + '</td>';
     cols += '<td>' + nomeProduto.substring(0, 10) + '</td>';
     cols += '<td>' + quantidade + '</td>';
-    cols += '<td>' + valorProduto + '</td>';
+    cols += '<td>' + valorTotal + '</td>';
     cols += '<td>' + ' <button type="button" class="btn btn-light">' +
         '<span class="glyphicon glyphicon-remove"></span>' +
         '</button>' + '</td>';
 
-    contador++;
-
     addLinhas.append(cols);
     $('#tbRegistroVenda').append(addLinhas);
+
+    resumoVenda = {
+        contador: contador,
+        nomeProduto: nomeProduto,
+        quantidade: quantidade,
+        valorTotal: valorTotal
+    };
+
+    listaResumoVenda.push(resumoVenda);
+
+    contador++;
 }
 
 function documentoVendasReady() {
@@ -95,6 +139,7 @@ function documentoVendasReady() {
     $("body").delegate(".campoQuantidadeVenda", "keyup", btnCalcularValorProduto_keyup);
     $("body").delegate(".campoQuantidadeVenda", "change", ValidarQuantidade);
     $("body").delegate(".venderProduto", "click", VenderProduto_OnClick);
+    $("body").delegate(".btnFinalizarVenda", "click", btnFinalizarVenda_OnClick); 
 
     $('.campoQuantidadeVenda').val('1');
 }
